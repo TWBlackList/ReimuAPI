@@ -62,7 +62,7 @@ namespace ReimuAPI.ReimuBase
             return PluginsCaller.getHelpMessage(TempData.pluginsList, message, message.chat.type);
         }
 
-        public reloadConfig(){
+        public static bool reloadConfig(){
             ReimuConfig config = new ConfigManager().reloadConfig();
             return true;
         }
