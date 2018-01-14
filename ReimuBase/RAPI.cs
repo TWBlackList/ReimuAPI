@@ -62,6 +62,11 @@ namespace ReimuAPI.ReimuBase
             return PluginsCaller.getHelpMessage(TempData.pluginsList, message, message.chat.type);
         }
 
+        public reloadConfig(){
+            ReimuConfig config = new ConfigManager().reloadConfig();
+            return true;
+        }
+
         public static bool getIsBotAdmin(int UserID)
         {
             ReimuConfig config = new ConfigManager().getConfig();
