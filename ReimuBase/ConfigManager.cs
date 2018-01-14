@@ -34,7 +34,7 @@ namespace ReimuAPI.ReimuBase
         }
         public ReimuConfig reloadConfig()
         {
-            TempData.reimuConfig = null
+            TempData.reimuConfig = null;
             if (TempData.reimuConfig == null)
             {
                 string configPath = Environment.GetEnvironmentVariable("BOT_CONFIGPATH");
