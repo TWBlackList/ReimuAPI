@@ -32,7 +32,7 @@ namespace ReimuAPI.ReimuBase
                 return TempData.reimuConfig;
             }
         }
-        public ReimuConfig reloadConfig()
+        public reloadConfig()
         {
             TempData.reimuConfig = null;
             if (TempData.reimuConfig == null)
@@ -51,12 +51,10 @@ namespace ReimuAPI.ReimuBase
                     )
                 );
                 TempData.reimuConfig = data;
-                return data;
+
             }
             else
-            {
-                return TempData.reimuConfig;
-            }
+            {}
         }
     }
 
@@ -67,6 +65,7 @@ namespace ReimuAPI.ReimuBase
         public string api_host { get; set; }
         public long admin_group { get; set; } = 0;
         public int[] admin_list { get; set; }
+        public int[] op_list { get; set; }
         public PluginsListBundle plugins { get; set; }
     }
 

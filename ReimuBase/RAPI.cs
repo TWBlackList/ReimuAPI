@@ -76,5 +76,23 @@ namespace ReimuAPI.ReimuBase
             }
             return false;
         }
+        public static bool getIsBotAdmin(int UserID)
+        {
+            ReimuConfig config = new ConfigManager().getConfig();
+            foreach (int i in config.admin_list)
+            {
+                if (i == UserID) return true;
+            }
+            return false;
+        }
+        public static bool getIsBotOP(int UserID)
+        {
+            ReimuConfig config = new ConfigManager().getConfig();
+            foreach (int i in config.op_list)
+            {
+                if (i == UserID) return true;
+            }
+            return false;
+        }
     }
 }
