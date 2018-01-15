@@ -32,7 +32,7 @@ namespace ReimuAPI.ReimuBase
                 return TempData.reimuConfig;
             }
         }
-        public reloadConfig()
+        public ReimuConfig reloadConfig()
         {
             TempData.reimuConfig = null;
             if (TempData.reimuConfig == null)
@@ -51,10 +51,12 @@ namespace ReimuAPI.ReimuBase
                     )
                 );
                 TempData.reimuConfig = data;
-
+                return data;
             }
             else
-            {}
+            {
+                return TempData.reimuConfig;
+            }
         }
     }
 
