@@ -375,13 +375,13 @@ namespace ReimuAPI.ReimuBase
         public UserInfoRequest getChat(long ChatID)
         {
             ApiResult recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
-            return getMemberInfo(recData);
+            return getChatInfo(recData);
         }
 
         public UserInfoRequest getChat(string ChatID)
         {
             ApiResult recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
-            return getMemberInfo(recData);
+            return getChatInfo(recData);
         }
 
         public GroupUserInfo[] getChatAdministrators(long gid)
@@ -608,6 +608,19 @@ namespace ReimuAPI.ReimuBase
         {
             SetActionResult data = (SetActionResult)new DataContractJsonSerializer(
                 typeof(SetActionResult)
+            ).ReadObject(
+                new MemoryStream(
+                    Encoding.UTF8.GetBytes(content.Content)
+                )
+            );
+            data.httpContent = content;
+            return data;
+        }
+
+        public ChatInfoRequest getChatInfo(ApiResult content)
+        {
+            ChatInfoRequest data = (ChatInfoRequest)new DataContractJsonSerializer(
+                typeof(ChatInfoRequest)
             ).ReadObject(
                 new MemoryStream(
                     Encoding.UTF8.GetBytes(content.Content)
