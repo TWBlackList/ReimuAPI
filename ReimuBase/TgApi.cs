@@ -372,16 +372,28 @@ namespace ReimuAPI.ReimuBase
             return getSetActionResult(recData);
         }
 
-        public ChatInfoRequest getChat(long ChatID)
+        public ChatInfoRequest getChatInfo(long ChatID)
         {
             ApiResult recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
             return getChatInfo(recData);
         }
 
-        public ChatInfoRequest getChat(string ChatID)
+        public ChatInfoRequest getChatInfo(string ChatID)
         {
             ApiResult recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
             return getChatInfo(recData);
+        }
+
+        public UserInfoRequest getChat(long ChatID)
+        {
+            ApiResult recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
+            return getMemberInfo(recData);
+        }
+
+        public UserInfoRequest getChat(string ChatID)
+        {
+            ApiResult recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
+            return getMemberInfo(recData);
         }
 
         public GroupUserInfo[] getChatAdministrators(long gid)
@@ -617,10 +629,10 @@ namespace ReimuAPI.ReimuBase
             return data;
         }
 
-        public ChatInfoRequest getChatInfo(ApiResult content)
+        public UserInfoRequest getMemberInfo(ApiResult content)
         {
-            ChatInfoRequest data = (ChatInfoRequest)new DataContractJsonSerializer(
-                typeof(ChatInfoRequest)
+            UserInfoRequest data = (UserInfoRequest)new DataContractJsonSerializer(
+                typeof(UserInfoRequest)
             ).ReadObject(
                 new MemoryStream(
                     Encoding.UTF8.GetBytes(content.Content)
@@ -630,10 +642,10 @@ namespace ReimuAPI.ReimuBase
             return data;
         }
 
-        public UserInfoRequest getMemberInfo(ApiResult content)
+        public ChatInfoRequest getChatInfo(ApiResult content)
         {
-            UserInfoRequest data = (UserInfoRequest)new DataContractJsonSerializer(
-                typeof(UserInfoRequest)
+            ChatInfoRequest data = (ChatInfoRequest)new DataContractJsonSerializer(
+                typeof(ChatInfoRequest)
             ).ReadObject(
                 new MemoryStream(
                     Encoding.UTF8.GetBytes(content.Content)
