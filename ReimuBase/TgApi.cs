@@ -372,13 +372,13 @@ namespace ReimuAPI.ReimuBase
             return getSetActionResult(recData);
         }
 
-        public UserInfoRequest getChat(long ChatID)
+        public ChatInfoRequest getChat(long ChatID)
         {
             ApiResult recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
             return getChatInfo(recData);
         }
 
-        public UserInfoRequest getChat(string ChatID)
+        public ChatInfoRequest getChat(string ChatID)
         {
             ApiResult recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
             return getChatInfo(recData);
