@@ -23,6 +23,11 @@ namespace ReimuAPI.ReimuBase.TgData
         public bool result { get; set; }
     }
 
+    public class ChatInfoRequest : SendResult
+    {
+        public ChatInfo result { get; set; }
+    }
+
     public class UserInfoRequest : SendResult
     {
         public UserInfo result { get; set; }
