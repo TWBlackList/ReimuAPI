@@ -67,16 +67,16 @@ namespace ReimuAPI.ReimuBase
             return true;
         }
         
-        public static string escapeMarkdown(string string)
+        public static string escapeMarkdown(string text)
         {
-            string.Replace("*","\*");
-            string.Replace("_","\_");
-            string.Replace("[","\[");
-            string.Replace("]","\]");
-            string.Replace("(","\(");
-            string.Replace(")","\)");
-            string.Replace("`","\`");
-            return string;
+            text.Replace("*","\*");
+            text.Replace("_","\_");
+            text.Replace("[","\[");
+            text.Replace("]","\]");
+            text.Replace("(","\(");
+            text.Replace(")","\)");
+            text.Replace("`","\`");
+            return text;
         }
 
         public static bool getIsBotAdmin(int UserID)
