@@ -67,7 +67,7 @@ namespace ReimuAPI.ReimuBase
             return true;
         }
         
-        public static string escapeMarkdown(String string)
+        public static string escapeMarkdown(string string)
         {
             string.Replace("*","\*");
             string.Replace("_","\_");
