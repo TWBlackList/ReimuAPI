@@ -69,13 +69,13 @@ namespace ReimuAPI.ReimuBase
         
         public static string escapeMarkdown(string text)
         {
-            text.Replace("*","\\*");
-            text.Replace("_","\\_");
-            text.Replace("[","\\[");
-            text.Replace("]","\\]");
-            text.Replace("(","\\(");
-            text.Replace(")","\\)");
-            text.Replace("`","\\`");
+            text.Replace("*","\\\\*");
+            text.Replace("_","\\\\_");
+            text.Replace("[","\\\\[");
+            text.Replace("]","\\\\]");
+            text.Replace("(","\\\\(");
+            text.Replace(")","\\\\)");
+            text.Replace("`","\\\\`");
             return text;
         }
 
