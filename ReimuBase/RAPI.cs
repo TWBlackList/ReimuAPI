@@ -66,6 +66,18 @@ namespace ReimuAPI.ReimuBase
             ReimuConfig config = new ConfigManager().reloadConfig();
             return true;
         }
+        
+        public static string escapeMarkdown(String string)
+        {
+            string.Replace("*","\*");
+            string.Replace("_","\_");
+            string.Replace("[","\[");
+            string.Replace("]","\]");
+            string.Replace("(","\(");
+            string.Replace(")","\)");
+            string.Replace("`","\`");
+            return string;
+        }
 
         public static bool getIsBotAdmin(int UserID)
         {
