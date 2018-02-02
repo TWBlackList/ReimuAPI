@@ -74,8 +74,6 @@ namespace ReimuAPI.ReimuBase
             text = text.Replace("_",@"\_");
             text = text.Replace("[",@"\[");
             text = text.Replace("]",@"\]");
-            text = text.Replace("(",@"\(");
-            text = text.Replace(")",@"\)");
             text = text.Replace("`",@"\`");
             return text;
         }
