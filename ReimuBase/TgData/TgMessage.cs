@@ -84,7 +84,7 @@ namespace ReimuAPI.ReimuBase.TgData
         public long migrate_from_chat_id { get; set; } = -1; // 旧的群组的 ID
 
         public TgMessage pinned_message { get; set; } // 置顶消息
-
+        
         public Invoice invoce { get; set; } // 账单
 
         public UserInfo GetSendUser()

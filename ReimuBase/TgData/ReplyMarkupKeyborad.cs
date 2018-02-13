@@ -1,6 +1,10 @@
-﻿namespace ReimuAPI.ReimuBase.TgData
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ReimuAPI.ReimuBase.TgData
 {
-    internal class ReplyMarkupKeyborad
+    class ReplyMarkupKeyborad
     {
     }
 }

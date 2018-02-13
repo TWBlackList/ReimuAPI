@@ -3,7 +3,7 @@
     public class GroupUserInfo
     {
         public string status { get; set; }
-
+        
         public UserInfo user { get; set; }
 
         public bool can_be_edited { get; set; }

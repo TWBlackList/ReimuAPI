@@ -1,4 +1,9 @@
-﻿namespace ReimuAPI.ReimuBase.TgData
+﻿using ReimuAPI.ReimuBase.TgData;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ReimuAPI.ReimuBase.TgData
 {
     public class SendResult
     {

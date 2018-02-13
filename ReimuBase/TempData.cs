@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using ReimuAPI.ReimuBase.Caller;
+﻿using ReimuAPI.ReimuBase.Caller;
 using ReimuAPI.ReimuBase.TgData;
+using System;
+using System.Collections.Generic;
 
 namespace ReimuAPI.ReimuBase
 {

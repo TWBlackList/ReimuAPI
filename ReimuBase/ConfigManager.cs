@@ -11,10 +11,13 @@ namespace ReimuAPI.ReimuBase
         {
             if (TempData.reimuConfig == null)
             {
-                var configPath = Environment.GetEnvironmentVariable("BOT_CONFIGPATH");
-                if (configPath == "" || configPath == null) configPath = "./config.json";
-                var json = File.ReadAllText(configPath);
-                var data = (ReimuConfig) new DataContractJsonSerializer(
+                string configPath = Environment.GetEnvironmentVariable("BOT_CONFIGPATH");
+                if (configPath == "" || configPath == null)
+                {
+                    configPath = "./config.json";
+                }
+                string json = File.ReadAllText(configPath);
+                ReimuConfig data = (ReimuConfig)new DataContractJsonSerializer(
                     typeof(ReimuConfig)
                 ).ReadObject(
                     new MemoryStream(
@@ -24,19 +27,23 @@ namespace ReimuAPI.ReimuBase
                 TempData.reimuConfig = data;
                 return data;
             }
-
-            return TempData.reimuConfig;
+            else
+            {
+                return TempData.reimuConfig;
+            }
         }
-
         public ReimuConfig reloadConfig()
         {
             TempData.reimuConfig = null;
             if (TempData.reimuConfig == null)
             {
-                var configPath = Environment.GetEnvironmentVariable("BOT_CONFIGPATH");
-                if (configPath == "" || configPath == null) configPath = "./config.json";
-                var json = File.ReadAllText(configPath);
-                var data = (ReimuConfig) new DataContractJsonSerializer(
+                string configPath = Environment.GetEnvironmentVariable("BOT_CONFIGPATH");
+                if (configPath == "" || configPath == null)
+                {
+                    configPath = "./config.json";
+                }
+                string json = File.ReadAllText(configPath);
+                ReimuConfig data = (ReimuConfig)new DataContractJsonSerializer(
                     typeof(ReimuConfig)
                 ).ReadObject(
                     new MemoryStream(
@@ -46,8 +53,10 @@ namespace ReimuAPI.ReimuBase
                 TempData.reimuConfig = data;
                 return data;
             }
-
-            return TempData.reimuConfig;
+            else
+            {
+                return TempData.reimuConfig;
+            }
         }
     }
 

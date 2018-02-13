@@ -1,4 +1,8 @@
-﻿namespace ReimuAPI.ReimuBase.TgData.OtherMessage
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ReimuAPI.ReimuBase.TgData.OtherMessage
 {
     public class Invoice
     {
