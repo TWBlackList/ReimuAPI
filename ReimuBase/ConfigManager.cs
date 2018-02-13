@@ -68,6 +68,7 @@ namespace ReimuAPI.ReimuBase
         public long admin_group { get; set; } = 0;
         public int[] admin_list { get; set; }
         public int[] op_list { get; set; }
+        public int[] whitelist { get; set; }
         public PluginsListBundle plugins { get; set; }
     }
 

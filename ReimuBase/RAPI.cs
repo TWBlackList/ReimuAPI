@@ -80,6 +80,18 @@ namespace ReimuAPI.ReimuBase
             return text;
         }
 
+        public static bool getIsInWhitelist(int UserID)
+        {
+            if(getIsBotAdmin(UserID)){return true;}
+            if(getIsBotOP(UserID)){return true;}
+            ReimuConfig config = new ConfigManager().getConfig();
+            foreach (int i in config.whitelist)
+            {
+                if (i == UserID) return true;
+            }
+            return false;
+        }
+
         public static bool getIsBotAdmin(int UserID)
         {
             ReimuConfig config = new ConfigManager().getConfig();
