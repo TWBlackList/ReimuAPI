@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Reflection;
 
 namespace ReimuAPI.ReimuBase
 {
@@ -11,7 +10,7 @@ namespace ReimuAPI.ReimuBase
         {
             StackTrace stackTrace = new StackTrace();
             StackFrame stackFrame = stackTrace.GetFrame(1);
-            System.Reflection.MethodBase methodBase = stackFrame.GetMethod();
+            MethodBase methodBase = stackFrame.GetMethod();
             Console.WriteLine("[INFO] [" + methodBase.DeclaringType.FullName + "] " + content);
         }
 
@@ -19,7 +18,7 @@ namespace ReimuAPI.ReimuBase
         {
             StackTrace stackTrace = new StackTrace();
             StackFrame stackFrame = stackTrace.GetFrame(1);
-            System.Reflection.MethodBase methodBase = stackFrame.GetMethod();
+            MethodBase methodBase = stackFrame.GetMethod();
             Console.WriteLine("[WARN] [" + methodBase.DeclaringType.FullName + "] " + content);
         }
 
@@ -27,7 +26,7 @@ namespace ReimuAPI.ReimuBase
         {
             StackTrace stackTrace = new StackTrace();
             StackFrame stackFrame = stackTrace.GetFrame(1);
-            System.Reflection.MethodBase methodBase = stackFrame.GetMethod();
+            MethodBase methodBase = stackFrame.GetMethod();
             Console.WriteLine("[ERROR] [" + methodBase.DeclaringType.FullName + "] " + content);
         }
     }

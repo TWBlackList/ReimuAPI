@@ -12,12 +12,9 @@ namespace ReimuAPI.ReimuBase
             if (TempData.reimuConfig == null)
             {
                 string configPath = Environment.GetEnvironmentVariable("BOT_CONFIGPATH");
-                if (configPath == "" || configPath == null)
-                {
-                    configPath = "./config.json";
-                }
+                if (configPath == "" || configPath == null) configPath = "./config.json";
                 string json = File.ReadAllText(configPath);
-                ReimuConfig data = (ReimuConfig)new DataContractJsonSerializer(
+                ReimuConfig data = (ReimuConfig) new DataContractJsonSerializer(
                     typeof(ReimuConfig)
                 ).ReadObject(
                     new MemoryStream(
@@ -27,23 +24,19 @@ namespace ReimuAPI.ReimuBase
                 TempData.reimuConfig = data;
                 return data;
             }
-            else
-            {
-                return TempData.reimuConfig;
-            }
+
+            return TempData.reimuConfig;
         }
+
         public ReimuConfig reloadConfig()
         {
             TempData.reimuConfig = null;
             if (TempData.reimuConfig == null)
             {
                 string configPath = Environment.GetEnvironmentVariable("BOT_CONFIGPATH");
-                if (configPath == "" || configPath == null)
-                {
-                    configPath = "./config.json";
-                }
+                if (configPath == "" || configPath == null) configPath = "./config.json";
                 string json = File.ReadAllText(configPath);
-                ReimuConfig data = (ReimuConfig)new DataContractJsonSerializer(
+                ReimuConfig data = (ReimuConfig) new DataContractJsonSerializer(
                     typeof(ReimuConfig)
                 ).ReadObject(
                     new MemoryStream(
@@ -53,10 +46,8 @@ namespace ReimuAPI.ReimuBase
                 TempData.reimuConfig = data;
                 return data;
             }
-            else
-            {
-                return TempData.reimuConfig;
-            }
+
+            return TempData.reimuConfig;
         }
     }
 

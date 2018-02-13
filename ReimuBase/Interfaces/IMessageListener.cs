@@ -16,20 +16,28 @@ namespace ReimuAPI.ReimuBase.Interfaces
         CallbackMessage OnGroupMessageReceive(TgMessage RawMessage, string JsonMessage, string TextMessage);
         CallbackMessage OnSupergroupMessageReceive(TgMessage RawMessage, string JsonMessage, string TextMessage);
 
-        CallbackMessage OnPrivateForwardedUserMessageReceive(TgMessage RawMessage, string JsonMessage, UserInfo FromUser);
-        CallbackMessage OnGroupForwardedUserMessageReceive(TgMessage RawMessage, string JsonMessage, UserInfo FromUser);
-        CallbackMessage OnSupergroupForwardedUserMessageReceive(TgMessage RawMessage, string JsonMessage, UserInfo FromUser);
+        CallbackMessage OnPrivateForwardedUserMessageReceive(TgMessage RawMessage, string JsonMessage,
+            UserInfo FromUser);
 
-        CallbackMessage OnPrivateForwardedChatMessageReceive(TgMessage RawMessage, string JsonMessage, ChatInfo FromChat);
+        CallbackMessage OnGroupForwardedUserMessageReceive(TgMessage RawMessage, string JsonMessage, UserInfo FromUser);
+
+        CallbackMessage OnSupergroupForwardedUserMessageReceive(TgMessage RawMessage, string JsonMessage,
+            UserInfo FromUser);
+
+        CallbackMessage OnPrivateForwardedChatMessageReceive(TgMessage RawMessage, string JsonMessage,
+            ChatInfo FromChat);
+
         CallbackMessage OnGroupForwardedChatMessageReceive(TgMessage RawMessage, string JsonMessage, ChatInfo FromChat);
-        CallbackMessage OnSupergroupForwardedChatMessageReceive(TgMessage RawMessage, string JsonMessage, ChatInfo FromChat);
+
+        CallbackMessage OnSupergroupForwardedChatMessageReceive(TgMessage RawMessage, string JsonMessage,
+            ChatInfo FromChat);
 
         CallbackMessage OnGroupMemberJoinReceive(TgMessage RawMessage, string JsonMessage, UserInfo JoinedUser);
         CallbackMessage OnSupergroupMemberJoinReceive(TgMessage RawMessage, string JsonMessage, UserInfo JoinedUser);
 
         CallbackMessage OnGroupMemberLeftReceive(TgMessage RawMessage, string JsonMessage, UserInfo JoinedUser);
         CallbackMessage OnSupergroupMemberLeftReceive(TgMessage RawMessage, string JsonMessage, UserInfo JoinedUser);
-        
+
 
         CallbackMessage OnPrivateAudioReceive(TgMessage RawMessage, string JsonMessage, AudioFile voice);
         CallbackMessage OnGroupAudioReceive(TgMessage RawMessage, string JsonMessage, AudioFile voice);
@@ -92,7 +100,9 @@ namespace ReimuAPI.ReimuBase.Interfaces
         CallbackMessage OnMigrateFromChatReceive(TgMessage RawMessage, string JsonMessage, int MigrateFromChatID);
 
         CallbackMessage OnGroupPinnedMessageReceive(TgMessage RawMessage, string JsonMessage, TgMessage PinnedMessage);
-        CallbackMessage OnSupergroupPinnedMessageReceive(TgMessage RawMessage, string JsonMessage, TgMessage PinnedMessage);
+
+        CallbackMessage OnSupergroupPinnedMessageReceive(TgMessage RawMessage, string JsonMessage,
+            TgMessage PinnedMessage);
 
         CallbackMessage OnPrivateInvoiceReceive(TgMessage RawMessage, string JsonMessage, Invoice invoice);
         CallbackMessage OnGroupInvoiceReceive(TgMessage RawMessage, string JsonMessage, Invoice invoice);

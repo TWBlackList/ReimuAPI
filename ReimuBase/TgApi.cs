@@ -1,10 +1,10 @@
-﻿using ReimuAPI.ReimuBase.TgData;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using ReimuAPI.ReimuBase.TgData;
 
 namespace ReimuAPI.ReimuBase
 {
@@ -48,6 +48,7 @@ namespace ReimuAPI.ReimuBase
                 TempData.tgApi = api;
                 return api;
             }
+
             return TempData.tgApi;
         }
 
@@ -55,7 +56,7 @@ namespace ReimuAPI.ReimuBase
         {
             if (TempData.SelfInfo == null)
             {
-                UserInfoRequest data = (UserInfoRequest)new DataContractJsonSerializer(
+                UserInfoRequest data = (UserInfoRequest) new DataContractJsonSerializer(
                     typeof(UserInfoRequest)
                 ).ReadObject(
                     new MemoryStream(
@@ -67,15 +68,11 @@ namespace ReimuAPI.ReimuBase
                     TempData.SelfInfo = data.result;
                     return data.result;
                 }
-                else
-                {
-                    return null;
-                }
+
+                return null;
             }
-            else
-            {
-                return TempData.SelfInfo;
-            }
+
+            return TempData.SelfInfo;
         }
 
         public SendMessageResult sendMessage(
@@ -86,40 +83,30 @@ namespace ReimuAPI.ReimuBase
             bool DisableWebPreview = true,
             bool DisableNotification = true,
             string ReplyMarkup = null
-            )
+        )
         {
             string jsonData = "{\"chat_id\":" + ChatID;
             jsonData += ",\"text\":" + jsonEncode(Message);
-            if (ReplyID != -1)
-            {
-                jsonData += ",\"reply_to_message_id\":" + ReplyID;
-            }
-            if (ParseMode == PARSEMODE_MARKDOWN)
-            {
-                jsonData += ",\"parse_mode\":\"Markdown\"";
-            }
-            if (ParseMode == PARSEMODE_HTML)
-            {
-                jsonData += ",\"parse_mode\":\"HTML\"";
-            }
+            if (ReplyID != -1) jsonData += ",\"reply_to_message_id\":" + ReplyID;
+            if (ParseMode == PARSEMODE_MARKDOWN) jsonData += ",\"parse_mode\":\"Markdown\"";
+            if (ParseMode == PARSEMODE_HTML) jsonData += ",\"parse_mode\":\"HTML\"";
             jsonData += ",\"disable_web_page_preview\":" + booleanToString(DisableWebPreview);
             jsonData += ",\"disable_notification\":" + booleanToString(DisableNotification);
-            if (ReplyMarkup != null)
-            {
-                jsonData += ",\"reply_markup\":" + ReplyMarkup;
-            }
+            if (ReplyMarkup != null) jsonData += ",\"reply_markup\":" + ReplyMarkup;
             jsonData += "}";
             ApiResult recData = postJson(apiUrl + "sendMessage", jsonData);
             return getSendMessageResult(recData);
         }
 
-        public SendMessageResult forwardMessage(long ChatID, long FromChatID, int MessageID, bool DisableNotification = true)
+        public SendMessageResult forwardMessage(long ChatID, long FromChatID, int MessageID,
+            bool DisableNotification = true)
         {
             ApiResult recData = postWeb(apiUrl + "forwardMessage", "chat_id=" + ChatID +
-                "&from_chat_id=" + FromChatID +
-                "&message_id=" + MessageID +
-                "&disable_notification" + booleanToString(DisableNotification)
-                );
+                                                                   "&from_chat_id=" + FromChatID +
+                                                                   "&message_id=" + MessageID +
+                                                                   "&disable_notification" +
+                                                                   booleanToString(DisableNotification)
+            );
             return getSendMessageResult(recData);
         }
 
@@ -171,21 +158,15 @@ namespace ReimuAPI.ReimuBase
             int ReplyID,
             bool DisableNotification = true,
             string ReplyMarkup = null
-            )
+        )
         {
             string jsonData = "{\"chat_id\":" + ChatID;
             jsonData += ",\"phone_number\":" + jsonEncode(PhoneNumber);
-            if (ReplyID != -1)
-            {
-                jsonData += ",\"reply_to_message_id\":" + ReplyID;
-            }
+            if (ReplyID != -1) jsonData += ",\"reply_to_message_id\":" + ReplyID;
             jsonData += ",\"first_name\":" + jsonEncode(FirstName);
             jsonData += ",\"last_name\":" + jsonEncode(LastName);
             jsonData += ",\"disable_notification\":" + booleanToString(DisableNotification);
-            if (ReplyMarkup != null)
-            {
-                jsonData += ",\"reply_markup\":" + ReplyMarkup;
-            }
+            if (ReplyMarkup != null) jsonData += ",\"reply_markup\":" + ReplyMarkup;
             jsonData += "}";
             ApiResult recData = postJson(apiUrl + "sendContact", jsonData);
             return getSendMessageResult(recData);
@@ -230,9 +211,10 @@ namespace ReimuAPI.ReimuBase
                     realAction = "typing";
                     break;
             }
+
             ApiResult recData = postWeb(apiUrl + "sendChatAction", "chat_id=" + ChatID +
-                "&action=" + realAction
-                );
+                                                                   "&action=" + realAction
+            );
             return getSetActionResult(recData);
         }
 
@@ -249,13 +231,10 @@ namespace ReimuAPI.ReimuBase
         public SetActionResult kickChatMember(long ChatID, long UserID, long UtilDate = 0)
         {
             string realUtilDate = "";
-            if (UtilDate != 0)
-            {
-                realUtilDate = "&until_date=" + UtilDate;
-            }
+            if (UtilDate != 0) realUtilDate = "&until_date=" + UtilDate;
             ApiResult recData = postWeb(apiUrl + "kickChatMember", "chat_id=" + ChatID +
-                "&user_id=" + UserID + realUtilDate
-                );
+                                                                   "&user_id=" + UserID + realUtilDate
+            );
             return getSetActionResult(recData);
         }
 
@@ -273,21 +252,18 @@ namespace ReimuAPI.ReimuBase
             bool SendMedia = false,
             bool SendOthers = false,
             bool SendWebpage = false
-            )
+        )
         {
             string realUtilDate = "";
-            if (UtilDate != 0)
-            {
-                realUtilDate = "&until_date=" + UtilDate;
-            }
+            if (UtilDate != 0) realUtilDate = "&until_date=" + UtilDate;
             string permissions = "";
             permissions += "&can_send_messages=" + booleanToString(SendMessage);
             permissions += "&can_send_media_messages=" + booleanToString(SendMedia);
             permissions += "&can_send_other_messages=" + booleanToString(SendOthers);
             permissions += "&can_add_web_page_previews=" + booleanToString(SendWebpage);
             ApiResult recData = postWeb(apiUrl + "restrictChatMember", "chat_id=" + ChatID +
-                "&user_id=" + UserID + realUtilDate + permissions
-                );
+                                                                       "&user_id=" + UserID + realUtilDate + permissions
+            );
             return getSetActionResult(recData);
         }
 
@@ -302,7 +278,7 @@ namespace ReimuAPI.ReimuBase
             bool RestrictMembers = false,
             bool PinMessages = false,
             bool PromoteMembers = false
-            )
+        )
         {
             string permissions = "";
             permissions += "&can_change_info=" + booleanToString(ChangeInfo);
@@ -314,8 +290,8 @@ namespace ReimuAPI.ReimuBase
             permissions += "&can_pin_messages=" + booleanToString(PinMessages);
             permissions += "&can_promote_members=" + booleanToString(PromoteMembers);
             ApiResult recData = postWeb(apiUrl + "promoteChatMember", "chat_id=" + ChatID +
-                "&user_id=" + UserID + permissions
-                );
+                                                                      "&user_id=" + UserID + permissions
+            );
             return getSetActionResult(recData);
         }
 
@@ -356,7 +332,7 @@ namespace ReimuAPI.ReimuBase
                 "chat_id=" + ChatID +
                 "&message_id=" + MessageID +
                 "&disable_notification=" + DisableNotification
-                );
+            );
             return getSendMessageResult(recData);
         }
 
@@ -400,24 +376,23 @@ namespace ReimuAPI.ReimuBase
         {
             if (TempData.tempAdminList == null)
             {
-                TempData.tempAdminList = new Dictionary<long, GroupUserInfo[]> { };
+                TempData.tempAdminList = new Dictionary<long, GroupUserInfo[]>();
                 TempData.adminListUptime = DateTime.Now.AddMinutes(60);
             }
+
             GroupUserInfo[] list;
             if (DateTime.Now <= TempData.adminListUptime)
             {
                 TempData.tempAdminList.TryGetValue(gid, out list);
-                if (list != null)
-                {
-                    return list;
-                }
+                if (list != null) return list;
             }
             else
             {
                 TempData.tempAdminList.Clear();
                 TempData.adminListUptime = DateTime.Now.AddMinutes(60);
             }
-            MemberList data = (MemberList)new DataContractJsonSerializer(
+
+            MemberList data = (MemberList) new DataContractJsonSerializer(
                 typeof(MemberList)
             ).ReadObject(
                 new MemoryStream(
@@ -431,7 +406,7 @@ namespace ReimuAPI.ReimuBase
         public MembersCountResult getChatMembersCount(long ChatID)
         {
             ApiResult recData = postWeb(apiUrl + "getChatMembersCount", "chat_id=" + ChatID);
-            MembersCountResult data = (MembersCountResult)new DataContractJsonSerializer(
+            MembersCountResult data = (MembersCountResult) new DataContractJsonSerializer(
                 typeof(MembersCountResult)
             ).ReadObject(
                 new MemoryStream(
@@ -449,28 +424,20 @@ namespace ReimuAPI.ReimuBase
         }
 
         public ApiResult answerCallbackQuery
-            (string CallbackQueryID,
+        (string CallbackQueryID,
             string Text = null,
             bool ShowAlert = false,
             string URL = null,
             int CacheTime = 0)
         {
             string otherMsg = "";
-            if (Text != null)
-            {
-                otherMsg += "&text=" + Text;
-            }
+            if (Text != null) otherMsg += "&text=" + Text;
             otherMsg += "&show_alert=" + ShowAlert;
-            if (URL != null)
-            {
-                otherMsg += "&url=" + URL;
-            }
-            if (CacheTime != 0)
-            {
-                otherMsg += "&cache_time=" + CacheTime;
-            }
+            if (URL != null) otherMsg += "&url=" + URL;
+            if (CacheTime != 0) otherMsg += "&cache_time=" + CacheTime;
 
-            ApiResult recData = postWeb(apiUrl + "answerCallbackQuery", "callback_query_id=" + CallbackQueryID + otherMsg);
+            ApiResult recData = postWeb(apiUrl + "answerCallbackQuery",
+                "callback_query_id=" + CallbackQueryID + otherMsg);
             return recData;
         }
 
@@ -483,31 +450,20 @@ namespace ReimuAPI.ReimuBase
             int ParseMode = 0,
             bool DisableWebPreview = true,
             string ReplyMarkup = null
-            )
+        )
         {
             string jsonData = "{\"text\":" + jsonEncode(Message);
-            if (ChatID != -1)
-            {
-                jsonData += ",\"chat_id\":" + ChatID;
-            }
+            if (ChatID != -1) jsonData += ",\"chat_id\":" + ChatID;
             if (InlineMessageID != null)
             {
                 jsonData += ",\"message_id\":" + MessageID;
                 jsonData += ",\"inline_message_id\":" + InlineMessageID;
             }
-            if (ParseMode == PARSEMODE_MARKDOWN)
-            {
-                jsonData += ",\"parse_mode\":\"Markdown\"";
-            }
-            if (ParseMode == PARSEMODE_HTML)
-            {
-                jsonData += ",\"parse_mode\":\"HTML\"";
-            }
+
+            if (ParseMode == PARSEMODE_MARKDOWN) jsonData += ",\"parse_mode\":\"Markdown\"";
+            if (ParseMode == PARSEMODE_HTML) jsonData += ",\"parse_mode\":\"HTML\"";
             jsonData += ",\"disable_web_page_preview\":" + booleanToString(DisableWebPreview);
-            if (ReplyMarkup != null)
-            {
-                jsonData += ",\"reply_markup\":" + ReplyMarkup;
-            }
+            if (ReplyMarkup != null) jsonData += ",\"reply_markup\":" + ReplyMarkup;
             jsonData += "}";
             ApiResult recData = postJson(apiUrl + "editMessageText", jsonData);
             return recData;
@@ -519,26 +475,18 @@ namespace ReimuAPI.ReimuBase
             string InlineMessageID = null,
             int MessageID = -1,
             string ReplyMarkup = null
-            )
+        )
         {
             string jsonData = "{";
-            if (ChatID != -1)
-            {
-                jsonData += "\"chat_id\":" + ChatID;
-            }
+            if (ChatID != -1) jsonData += "\"chat_id\":" + ChatID;
             if (InlineMessageID != null)
             {
                 jsonData += "\"inline_message_id\":" + InlineMessageID;
                 jsonData += ",\"message_id\":" + MessageID;
             }
-            if (Message != null)
-            {
-                jsonData += "\"caption\":" + jsonEncode(Message);
-            }
-            if (ReplyMarkup != null)
-            {
-                jsonData += ",\"reply_markup\":" + ReplyMarkup;
-            }
+
+            if (Message != null) jsonData += "\"caption\":" + jsonEncode(Message);
+            if (ReplyMarkup != null) jsonData += ",\"reply_markup\":" + ReplyMarkup;
             jsonData += "}";
             ApiResult recData = postJson(apiUrl + "editMessageCaption", jsonData);
             return recData;
@@ -549,22 +497,17 @@ namespace ReimuAPI.ReimuBase
             string InlineMessageID = null,
             int MessageID = -1,
             string ReplyMarkup = null
-            )
+        )
         {
             string jsonData = "{";
-            if (ChatID != -1)
-            {
-                jsonData += "\"chat_id\":" + ChatID;
-            }
+            if (ChatID != -1) jsonData += "\"chat_id\":" + ChatID;
             if (InlineMessageID != null)
             {
                 jsonData += "\"inline_message_id\":" + InlineMessageID;
                 jsonData += ",\"message_id\":" + MessageID;
             }
-            if (ReplyMarkup != null)
-            {
-                jsonData += ",\"reply_markup\":" + ReplyMarkup;
-            }
+
+            if (ReplyMarkup != null) jsonData += ",\"reply_markup\":" + ReplyMarkup;
             jsonData += "}";
             ApiResult recData = postJson(apiUrl + "editMessageReplyMarkup", jsonData);
             return recData;
@@ -580,13 +523,9 @@ namespace ReimuAPI.ReimuBase
         {
             UserInfo userInfo;
             if (TempData.SelfInfo == null)
-            {
                 userInfo = getMe();
-            }
             else
-            {
                 userInfo = TempData.SelfInfo;
-            }
             return checkIsAdmin(gid, userInfo.id);
         }
 
@@ -594,18 +533,14 @@ namespace ReimuAPI.ReimuBase
         {
             GroupUserInfo[] list = getChatAdministrators(gid);
             foreach (GroupUserInfo admin in list)
-            {
                 if (admin.user.id == uid)
-                {
                     return true;
-                }
-            }
             return false;
         }
 
         public SendMessageResult getSendMessageResult(ApiResult content)
         {
-            SendMessageResult data = (SendMessageResult)new DataContractJsonSerializer(
+            SendMessageResult data = (SendMessageResult) new DataContractJsonSerializer(
                 typeof(SendMessageResult)
             ).ReadObject(
                 new MemoryStream(
@@ -618,7 +553,7 @@ namespace ReimuAPI.ReimuBase
 
         public SetActionResult getSetActionResult(ApiResult content)
         {
-            SetActionResult data = (SetActionResult)new DataContractJsonSerializer(
+            SetActionResult data = (SetActionResult) new DataContractJsonSerializer(
                 typeof(SetActionResult)
             ).ReadObject(
                 new MemoryStream(
@@ -631,7 +566,7 @@ namespace ReimuAPI.ReimuBase
 
         public UserInfoRequest getMemberInfo(ApiResult content)
         {
-            UserInfoRequest data = (UserInfoRequest)new DataContractJsonSerializer(
+            UserInfoRequest data = (UserInfoRequest) new DataContractJsonSerializer(
                 typeof(UserInfoRequest)
             ).ReadObject(
                 new MemoryStream(
@@ -644,7 +579,7 @@ namespace ReimuAPI.ReimuBase
 
         public ChatInfoRequest getChatInfo(ApiResult content)
         {
-            ChatInfoRequest data = (ChatInfoRequest)new DataContractJsonSerializer(
+            ChatInfoRequest data = (ChatInfoRequest) new DataContractJsonSerializer(
                 typeof(ChatInfoRequest)
             ).ReadObject(
                 new MemoryStream(
@@ -658,12 +593,8 @@ namespace ReimuAPI.ReimuBase
         public string booleanToString(bool obj)
         {
             if (obj)
-            {
                 return "true";
-            } else
-            {
-                return "false";
-            }
+            return "false";
         }
 
         public string jsonEncode(object obj)
@@ -673,7 +604,7 @@ namespace ReimuAPI.ReimuBase
             serializer.WriteObject(stream, obj);
             byte[] dataBytes = new byte[stream.Length];
             stream.Position = 0;
-            stream.Read(dataBytes, 0, (int)stream.Length);
+            stream.Read(dataBytes, 0, (int) stream.Length);
             return Encoding.UTF8.GetString(dataBytes);
         }
 
@@ -681,7 +612,7 @@ namespace ReimuAPI.ReimuBase
         {
             byte[] bs = Encoding.UTF8.GetBytes(param);
 
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(uri);
+            HttpWebRequest req = (HttpWebRequest) WebRequest.Create(uri);
             req.Method = "POST";
             req.ContentType = "application/x-www-form-urlencoded; charset=utf-8";
             req.ContentLength = bs.Length;
@@ -691,7 +622,7 @@ namespace ReimuAPI.ReimuBase
                 reqStream.Write(bs, 0, bs.Length);
             }
 
-            String returnText;
+            string returnText;
             HttpStatusCode statusCode;
             try
             {
@@ -713,10 +644,17 @@ namespace ReimuAPI.ReimuBase
                         returnText = Encoding.UTF8.GetString(memoryStream.ToArray());
                         statusCode = resp.StatusCode;
                     }
-                    else throw e;
+                    else
+                    {
+                        throw e;
+                    }
                 }
-                else throw e;
+                else
+                {
+                    throw e;
+                }
             }
+
             return new ApiResult(statusCode, returnText);
         }
         /*
@@ -732,7 +670,7 @@ namespace ReimuAPI.ReimuBase
 
         public ApiResult postJson(string uri, string json)
         {
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(uri);
+            HttpWebRequest req = (HttpWebRequest) WebRequest.Create(uri);
             req.Method = "POST";
             req.ContentType = "application/json; charset=utf-8";
 
@@ -743,11 +681,11 @@ namespace ReimuAPI.ReimuBase
                 streamWriter.Close();
             }
 
-            String returnText;
+            string returnText;
             HttpStatusCode statusCode;
             try
             {
-                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+                HttpWebResponse resp = (HttpWebResponse) req.GetResponse();
                 MemoryStream memoryStream = new MemoryStream();
                 resp.GetResponseStream().CopyTo(memoryStream);
                 returnText = Encoding.UTF8.GetString(memoryStream.ToArray());
@@ -765,19 +703,26 @@ namespace ReimuAPI.ReimuBase
                         returnText = Encoding.UTF8.GetString(memoryStream.ToArray());
                         statusCode = resp.StatusCode;
                     }
-                    else throw e;
+                    else
+                    {
+                        throw e;
+                    }
                 }
-                else throw e;
+                else
+                {
+                    throw e;
+                }
             }
+
             return new ApiResult(statusCode, returnText);
         }
 
         public ApiResult getWeb(string uri)
         {
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(uri);
+            HttpWebRequest req = (HttpWebRequest) WebRequest.Create(uri);
             req.Method = "GET";
 
-            String returnText;
+            string returnText;
             HttpStatusCode statusCode;
             try
             {
@@ -799,13 +744,19 @@ namespace ReimuAPI.ReimuBase
                         returnText = Encoding.UTF8.GetString(memoryStream.ToArray());
                         statusCode = resp.StatusCode;
                     }
-                    else throw e;
+                    else
+                    {
+                        throw e;
+                    }
                 }
-                else throw e;
+                else
+                {
+                    throw e;
+                }
             }
+
             return new ApiResult(statusCode, returnText);
         }
-
     }
 
     public class ApiResult

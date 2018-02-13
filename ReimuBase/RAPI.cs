@@ -1,8 +1,7 @@
-﻿using ReimuAPI.ReimuBase.Caller;
-using ReimuAPI.ReimuBase.TgData;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using ReimuAPI.ReimuBase.Caller;
+using ReimuAPI.ReimuBase.TgData;
 
 namespace ReimuAPI.ReimuBase
 {
@@ -15,17 +14,16 @@ namespace ReimuAPI.ReimuBase
                 ExceptionListener el = new ExceptionListener();
                 TempData.exceptionListener = el;
                 return el;
-            } else
-            {
-                return TempData.exceptionListener;
             }
+
+            return TempData.exceptionListener;
         }
 
         public static void loadPlugins(ExceptionListener exceptionListener = null)
         {
             string[] importantPlugins = new ConfigManager().getConfig().plugins.important;
             string[] normalPlugins = new ConfigManager().getConfig().plugins.normal;
-            List<PluginObject> pluginsList = new List<PluginObject> { };
+            List<PluginObject> pluginsList = new List<PluginObject>();
             foreach (string i in importantPlugins)
             {
                 string pluginsBaseDir = AppDomain.CurrentDomain.BaseDirectory + "plugins\\";
@@ -40,6 +38,7 @@ namespace ReimuAPI.ReimuBase
                     GetExceptionListener().OnException(e);
                 }
             }
+
             foreach (string i in normalPlugins)
             {
                 string pluginsBaseDir = AppDomain.CurrentDomain.BaseDirectory + "plugins\\";
@@ -54,6 +53,7 @@ namespace ReimuAPI.ReimuBase
                     GetExceptionListener().OnException(e);
                 }
             }
+
             TempData.pluginsList = pluginsList;
         }
 
@@ -62,31 +62,31 @@ namespace ReimuAPI.ReimuBase
             return PluginsCaller.getHelpMessage(TempData.pluginsList, message, message.chat.type);
         }
 
-        public static bool reloadConfig(){
+        public static bool reloadConfig()
+        {
             ReimuConfig config = new ConfigManager().reloadConfig();
             return true;
         }
-        
+
         public static string escapeMarkdown(string text)
         {
-            text = text.Replace(@"\",@"\\");
-            text = text.Replace("*",@"\*");
-            text = text.Replace("_",@"\_");
-            text = text.Replace("[",@"\[");
-            text = text.Replace("]",@"\]");
-            text = text.Replace("`",@"\`");
+            text = text.Replace(@"\", @"\\");
+            text = text.Replace("*", @"\*");
+            text = text.Replace("_", @"\_");
+            text = text.Replace("[", @"\[");
+            text = text.Replace("]", @"\]");
+            text = text.Replace("`", @"\`");
             return text;
         }
 
         public static bool getIsInWhitelist(int UserID)
         {
-            if(getIsBotAdmin(UserID)){return true;}
-            if(getIsBotOP(UserID)){return true;}
+            if (getIsBotAdmin(UserID)) return true;
+            if (getIsBotOP(UserID)) return true;
             ReimuConfig config = new ConfigManager().getConfig();
             foreach (int i in config.whitelist)
-            {
-                if (i == UserID) return true;
-            }
+                if (i == UserID)
+                    return true;
             return false;
         }
 
@@ -94,18 +94,17 @@ namespace ReimuAPI.ReimuBase
         {
             ReimuConfig config = new ConfigManager().getConfig();
             foreach (int i in config.admin_list)
-            {
-                if (i == UserID) return true;
-            }
+                if (i == UserID)
+                    return true;
             return false;
         }
+
         public static bool getIsBotOP(int UserID)
         {
             ReimuConfig config = new ConfigManager().getConfig();
             foreach (int i in config.op_list)
-            {
-                if (i == UserID) return true;
-            }
+                if (i == UserID)
+                    return true;
             return false;
         }
     }

@@ -1,7 +1,4 @@
 ﻿using ReimuAPI.ReimuBase.TgData;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ReimuAPI.ReimuBase.Interfaces
 {
