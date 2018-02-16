@@ -79,7 +79,7 @@ namespace ReimuAPI.ReimuBase
             return text;
         }
         
-        public static bool getIsBlockGroup(int GroupID)
+        public static bool getIsBlockGroup(long GroupID)
         {
             ReimuConfig config = new ConfigManager().getConfig();
             foreach (int i in config.blockgroup_list)
@@ -108,7 +108,7 @@ namespace ReimuAPI.ReimuBase
             return false;
         }
 
-        public static bool getIsBotOP(long UserID)
+        public static bool getIsBotOP(int UserID)
         {
             ReimuConfig config = new ConfigManager().getConfig();
             foreach (int i in config.op_list)
