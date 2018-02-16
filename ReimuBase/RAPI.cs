@@ -79,7 +79,7 @@ namespace ReimuAPI.ReimuBase
             return text;
         }
         
-        public static bool getIBlockGroup(int GroupID)
+        public static bool getIsBlockGroup(int GroupID)
         {
             ReimuConfig config = new ConfigManager().getConfig();
             foreach (int i in config.blockgroup_list)
