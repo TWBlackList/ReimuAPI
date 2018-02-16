@@ -27,11 +27,13 @@ namespace ReimuAPI.ReimuBase.TgData
 
         public int edit_date { get; set; } = -1; // 编辑日期
 
-        public ChatInfo author_signature { get; set; } // ???
+        public string author_signature { get; set; } // ???
 
         public string text { get; set; } // 信息文本
 
         public ContentEntities[] entities { get; set; } // 蓝色可点击的信息
+
+        public ContentEntities[] caption_entities { get; set; } // 蓝色可点击的信息
 
         public AudioFile audio { get; set; } // 音频
 

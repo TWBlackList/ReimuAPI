@@ -18,7 +18,7 @@ namespace ReimuAPI.ReimuBase
             StackTrace stackTrace = new StackTrace();
             StackFrame stackFrame = stackTrace.GetFrame(1);
             MethodBase methodBase = stackFrame.GetMethod();
-            string errmsg = "[ERROR] [" + methodBase.DeclaringType.FullName + "] ";
+            string errmsg = exception.Message + "[ERROR] [" + methodBase.DeclaringType.FullName + "] ";
             errmsg += "Error: Have an exception: " + exception;
             if (JsonString != null) errmsg += "\n\nRAW Json: " + JsonString;
             Console.WriteLine(errmsg);
