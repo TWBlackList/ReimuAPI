@@ -20,7 +20,7 @@ namespace ReimuAPI.ReimuBase.TgData
 
         public Photo photo { get; set; }
 
-        public bool description { get; set; }
+        public string description { get; set; }
 
         public string invite_link { get; set; }
 
