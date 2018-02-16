@@ -78,11 +78,20 @@ namespace ReimuAPI.ReimuBase
             text = text.Replace("`", @"\`");
             return text;
         }
+        
+        public static bool getIBlockGroup(int GroupID)
+        {
+            ReimuConfig config = new ConfigManager().getConfig();
+            foreach (int i in config.blockgroup_list)
+                if (i == GroupID)
+                    return true;
+            return false;
+        }
 
         public static bool getIsInWhitelist(int UserID)
         {
             if (getIsBotAdmin(UserID)) return true;
-            if (getIsBotOP(UserID)) return true;
+            if (getIsBotSYSOP(UserID)) return true;
             ReimuConfig config = new ConfigManager().getConfig();
             foreach (int i in config.whitelist)
                 if (i == UserID)
@@ -99,10 +108,10 @@ namespace ReimuAPI.ReimuBase
             return false;
         }
 
-        public static bool getIsBotOP(int UserID)
+        public static bool getIsBotSYSOP(int UserID)
         {
             ReimuConfig config = new ConfigManager().getConfig();
-            foreach (int i in config.op_list)
+            foreach (int i in config.sysop_list)
                 if (i == UserID)
                     return true;
             return false;
