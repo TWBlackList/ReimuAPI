@@ -18,21 +18,21 @@
 
         public string GetUserTextInfo()
         {
-            string info = "\nID: " + id;
-            if (first_name != null) info += "\nFirst name: " + first_name;
-            if (last_name != null) info += "\nLast name: " + last_name;
+            string info = "\nID : " + id;
+            if (first_name != null) info += "\nFirst name : " + first_name;
+            if (last_name != null) info += "\nLast name : " + last_name;
             if (username != null) info += "\nUsername : @" + username;
-            if (language_code != null) info += "\nLanguage code: " + language_code;
+            if (language_code != null) info += "\nLanguage code : " + language_code;
             return info;
         }
 
         public string GetUserTextInfo_ESCMD()
         {
-            string info = "\nID: " + id;
-            if (first_name != null) info += "\nFirst name: " + first_name;
-            if (last_name != null) info += "\nLast name: " + last_name;
+            string info = "\nID : " + id;
+            if (first_name != null) info += "\nFirst name : " + first_name;
+            if (last_name != null) info += "\nLast name : " + last_name;
             if (username != null) info += "\nUsername : @" + username;
-            if (language_code != null) info += "\nLanguage code: " + language_code;
+            if (language_code != null) info += "\nLanguage code : " + language_code;
 
             info = RAPI.escapeMarkdown(info);
 
