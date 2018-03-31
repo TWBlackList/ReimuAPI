@@ -87,6 +87,15 @@ namespace ReimuAPI.ReimuBase
                     return true;
             return false;
         }
+        
+        public static bool getIsInWhitelist(long ChannelID)
+        {
+            ReimuConfig config = new ConfigManager().getConfig();
+            foreach (long i in config.whitelist)
+                if (i == ChannelID)
+                    return true;
+            return false;
+        }
 
         public static bool getIsInWhitelist(int UserID)
         {
