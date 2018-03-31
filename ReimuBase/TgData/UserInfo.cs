@@ -16,6 +16,14 @@
 
         public string status { get; set; }
 
+        public string full_name()
+        {
+            string name = first_name;
+            if (last_name != null) name += last_name;
+            return name;
+
+        }
+
         public string GetUserTextInfo()
         {
             string info = "\nID : " + id;
