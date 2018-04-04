@@ -28,7 +28,7 @@ namespace ReimuAPI.ReimuBase.TgData
 
         public string GetChatTextInfo()
         {
-            string ChatInfo = "ID: " + id;
+            var ChatInfo = "ID: " + id;
             ChatInfo += "\nType: " + type;
             if (first_name != null) ChatInfo += "\nFirst name: " + first_name;
             if (title != null) ChatInfo += "\nLast name: " + title;

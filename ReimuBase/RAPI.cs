@@ -11,7 +11,7 @@ namespace ReimuAPI.ReimuBase
         {
             if (TempData.exceptionListener == null)
             {
-                ExceptionListener el = new ExceptionListener();
+                var el = new ExceptionListener();
                 TempData.exceptionListener = el;
                 return el;
             }
@@ -21,15 +21,15 @@ namespace ReimuAPI.ReimuBase
 
         public static void loadPlugins(ExceptionListener exceptionListener = null)
         {
-            string[] importantPlugins = new ConfigManager().getConfig().plugins.important;
-            string[] normalPlugins = new ConfigManager().getConfig().plugins.normal;
-            List<PluginObject> pluginsList = new List<PluginObject>();
-            foreach (string i in importantPlugins)
+            var importantPlugins = new ConfigManager().getConfig().plugins.important;
+            var normalPlugins = new ConfigManager().getConfig().plugins.normal;
+            var pluginsList = new List<PluginObject>();
+            foreach (var i in importantPlugins)
             {
-                string pluginsBaseDir = AppDomain.CurrentDomain.BaseDirectory + "plugins\\";
+                var pluginsBaseDir = AppDomain.CurrentDomain.BaseDirectory + "plugins\\";
                 try
                 {
-                    PluginObject pluginObject = new PluginObject(pluginsBaseDir + i + ".dll", true, i);
+                    var pluginObject = new PluginObject(pluginsBaseDir + i + ".dll", true, i);
                     pluginsList.Add(pluginObject);
                     Log.i("Plugin \"" + i + "\" (important) load success");
                 }
@@ -39,12 +39,12 @@ namespace ReimuAPI.ReimuBase
                 }
             }
 
-            foreach (string i in normalPlugins)
+            foreach (var i in normalPlugins)
             {
-                string pluginsBaseDir = AppDomain.CurrentDomain.BaseDirectory + "plugins\\";
+                var pluginsBaseDir = AppDomain.CurrentDomain.BaseDirectory + "plugins\\";
                 try
                 {
-                    PluginObject pluginObject = new PluginObject(pluginsBaseDir + i + ".dll", false, i);
+                    var pluginObject = new PluginObject(pluginsBaseDir + i + ".dll", false, i);
                     pluginsList.Add(pluginObject);
                     Log.i("Plugin \"" + i + "\" (normal) load success");
                 }
@@ -64,7 +64,7 @@ namespace ReimuAPI.ReimuBase
 
         public static bool reloadConfig()
         {
-            ReimuConfig config = new ConfigManager().reloadConfig();
+            var config = new ConfigManager().reloadConfig();
             return true;
         }
 
@@ -78,20 +78,20 @@ namespace ReimuAPI.ReimuBase
             text = text.Replace("`", @"\`");
             return text;
         }
-        
+
         public static bool getIsBlockGroup(long GroupID)
         {
-            ReimuConfig config = new ConfigManager().getConfig();
-            foreach (long i in config.blockgroup_list)
+            var config = new ConfigManager().getConfig();
+            foreach (var i in config.blockgroup_list)
                 if (i == GroupID)
                     return true;
             return false;
         }
-        
+
         public static bool getIsInWhitelist(long ChannelID)
         {
-            ReimuConfig config = new ConfigManager().getConfig();
-            foreach (long i in config.whitelist)
+            var config = new ConfigManager().getConfig();
+            foreach (var i in config.whitelist)
                 if (i == ChannelID)
                     return true;
             return false;
@@ -101,7 +101,7 @@ namespace ReimuAPI.ReimuBase
         {
             if (getIsBotOP(UserID)) return true;
             if (getIsBotAdmin(UserID)) return true;
-            ReimuConfig config = new ConfigManager().getConfig();
+            var config = new ConfigManager().getConfig();
             foreach (int i in config.whitelist)
                 if (i == UserID)
                     return true;
@@ -110,8 +110,8 @@ namespace ReimuAPI.ReimuBase
 
         public static bool getIsBotAdmin(int UserID)
         {
-            ReimuConfig config = new ConfigManager().getConfig();
-            foreach (int i in config.admin_list)
+            var config = new ConfigManager().getConfig();
+            foreach (var i in config.admin_list)
                 if (i == UserID)
                     return true;
             return false;
@@ -119,8 +119,8 @@ namespace ReimuAPI.ReimuBase
 
         public static bool getIsBotOP(int UserID)
         {
-            ReimuConfig config = new ConfigManager().getConfig();
-            foreach (int i in config.op_list)
+            var config = new ConfigManager().getConfig();
+            foreach (var i in config.op_list)
                 if (i == UserID)
                     return true;
             return false;

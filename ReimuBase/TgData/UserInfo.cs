@@ -18,15 +18,14 @@
 
         public string full_name()
         {
-            string name = first_name;
+            var name = first_name;
             if (last_name != null) name += last_name;
             return name;
-
         }
 
         public string GetUserTextInfo()
         {
-            string info = "\nID : " + id;
+            var info = "\nID : " + id;
             if (first_name != null) info += "\nFirst name : " + first_name;
             if (last_name != null) info += "\nLast name : " + last_name;
             if (username != null) info += "\nUsername : @" + username;
@@ -36,7 +35,7 @@
 
         public string GetUserTextInfo_ESCMD()
         {
-            string info = "\nID : " + id;
+            var info = "\nID : " + id;
             if (first_name != null) info += "\nFirst name : " + first_name;
             if (last_name != null) info += "\nLast name : " + last_name;
             if (username != null) info += "\nUsername : @" + username;

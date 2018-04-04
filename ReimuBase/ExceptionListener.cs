@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace ReimuAPI.ReimuBase
 {
@@ -15,10 +14,10 @@ namespace ReimuAPI.ReimuBase
 
         public void OnException(Exception exception, string JsonString = null)
         {
-            StackTrace stackTrace = new StackTrace();
-            StackFrame stackFrame = stackTrace.GetFrame(1);
-            MethodBase methodBase = stackFrame.GetMethod();
-            string errmsg = exception.Message + "[ERROR] [" + methodBase.DeclaringType.FullName + "] ";
+            var stackTrace = new StackTrace();
+            var stackFrame = stackTrace.GetFrame(1);
+            var methodBase = stackFrame.GetMethod();
+            var errmsg = exception.Message + "[ERROR] [" + methodBase.DeclaringType.FullName + "] ";
             errmsg += "Error: Have an exception: " + exception;
             if (JsonString != null) errmsg += "\n\nRAW Json: " + JsonString;
             Console.WriteLine(errmsg);
@@ -27,10 +26,10 @@ namespace ReimuAPI.ReimuBase
 
         public void OnJsonDecodeError(Exception exception, string JsonString)
         {
-            StackTrace stackTrace = new StackTrace();
-            StackFrame stackFrame = stackTrace.GetFrame(1);
-            MethodBase methodBase = stackFrame.GetMethod();
-            string errmsg = "[ERROR] [" + methodBase.DeclaringType.FullName + "] ";
+            var stackTrace = new StackTrace();
+            var stackFrame = stackTrace.GetFrame(1);
+            var methodBase = stackFrame.GetMethod();
+            var errmsg = "[ERROR] [" + methodBase.DeclaringType.FullName + "] ";
             errmsg += "Error: JSON decode error: " + exception;
             if (JsonString != null) errmsg += "\n\nRAW Json: " + JsonString;
             Console.WriteLine(errmsg);

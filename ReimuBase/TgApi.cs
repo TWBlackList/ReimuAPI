@@ -31,7 +31,7 @@ namespace ReimuAPI.ReimuBase
 
         public TgApi()
         {
-            ReimuConfig config = new ConfigManager().getConfig();
+            var config = new ConfigManager().getConfig();
             apiUrl = "https://" + config.api_host + "/bot" + config.api_key + "/";
         }
 
@@ -44,7 +44,7 @@ namespace ReimuAPI.ReimuBase
         {
             if (TempData.tgApi == null)
             {
-                TgApi api = new TgApi();
+                var api = new TgApi();
                 TempData.tgApi = api;
                 return api;
             }
@@ -56,7 +56,7 @@ namespace ReimuAPI.ReimuBase
         {
             if (TempData.SelfInfo == null)
             {
-                UserInfoRequest data = (UserInfoRequest) new DataContractJsonSerializer(
+                var data = (UserInfoRequest) new DataContractJsonSerializer(
                     typeof(UserInfoRequest)
                 ).ReadObject(
                     new MemoryStream(
@@ -85,7 +85,7 @@ namespace ReimuAPI.ReimuBase
             string ReplyMarkup = null
         )
         {
-            string jsonData = "{\"chat_id\":" + ChatID;
+            var jsonData = "{\"chat_id\":" + ChatID;
             jsonData += ",\"text\":" + jsonEncode(Message);
             if (ReplyID != -1) jsonData += ",\"reply_to_message_id\":" + ReplyID;
             if (ParseMode == PARSEMODE_MARKDOWN) jsonData += ",\"parse_mode\":\"Markdown\"";
@@ -94,18 +94,18 @@ namespace ReimuAPI.ReimuBase
             jsonData += ",\"disable_notification\":" + booleanToString(DisableNotification);
             if (ReplyMarkup != null) jsonData += ",\"reply_markup\":" + ReplyMarkup;
             jsonData += "}";
-            ApiResult recData = postJson(apiUrl + "sendMessage", jsonData);
+            var recData = postJson(apiUrl + "sendMessage", jsonData);
             return getSendMessageResult(recData);
         }
 
         public SendMessageResult forwardMessage(long ChatID, long FromChatID, int MessageID,
             bool DisableNotification = true)
         {
-            ApiResult recData = postWeb(apiUrl + "forwardMessage", "chat_id=" + ChatID +
-                                                                   "&from_chat_id=" + FromChatID +
-                                                                   "&message_id=" + MessageID +
-                                                                   "&disable_notification" +
-                                                                   booleanToString(DisableNotification)
+            var recData = postWeb(apiUrl + "forwardMessage", "chat_id=" + ChatID +
+                                                             "&from_chat_id=" + FromChatID +
+                                                             "&message_id=" + MessageID +
+                                                             "&disable_notification" +
+                                                             booleanToString(DisableNotification)
             );
             return getSendMessageResult(recData);
         }
@@ -160,7 +160,7 @@ namespace ReimuAPI.ReimuBase
             string ReplyMarkup = null
         )
         {
-            string jsonData = "{\"chat_id\":" + ChatID;
+            var jsonData = "{\"chat_id\":" + ChatID;
             jsonData += ",\"phone_number\":" + jsonEncode(PhoneNumber);
             if (ReplyID != -1) jsonData += ",\"reply_to_message_id\":" + ReplyID;
             jsonData += ",\"first_name\":" + jsonEncode(FirstName);
@@ -168,13 +168,13 @@ namespace ReimuAPI.ReimuBase
             jsonData += ",\"disable_notification\":" + booleanToString(DisableNotification);
             if (ReplyMarkup != null) jsonData += ",\"reply_markup\":" + ReplyMarkup;
             jsonData += "}";
-            ApiResult recData = postJson(apiUrl + "sendContact", jsonData);
+            var recData = postJson(apiUrl + "sendContact", jsonData);
             return getSendMessageResult(recData);
         }
 
         public SetActionResult sendChatAction(long ChatID, int Action)
         {
-            string realAction = "";
+            var realAction = "";
             switch (Action)
             {
                 case 0:
@@ -212,8 +212,8 @@ namespace ReimuAPI.ReimuBase
                     break;
             }
 
-            ApiResult recData = postWeb(apiUrl + "sendChatAction", "chat_id=" + ChatID +
-                                                                   "&action=" + realAction
+            var recData = postWeb(apiUrl + "sendChatAction", "chat_id=" + ChatID +
+                                                             "&action=" + realAction
             );
             return getSetActionResult(recData);
         }
@@ -230,17 +230,17 @@ namespace ReimuAPI.ReimuBase
 
         public SetActionResult kickChatMember(long ChatID, long UserID, long UtilDate = 0)
         {
-            string realUtilDate = "";
+            var realUtilDate = "";
             if (UtilDate != 0) realUtilDate = "&until_date=" + UtilDate;
-            ApiResult recData = postWeb(apiUrl + "kickChatMember", "chat_id=" + ChatID +
-                                                                   "&user_id=" + UserID + realUtilDate
+            var recData = postWeb(apiUrl + "kickChatMember", "chat_id=" + ChatID +
+                                                             "&user_id=" + UserID + realUtilDate
             );
             return getSetActionResult(recData);
         }
 
         public SetActionResult unbanChatMember(long ChatID, long UserID)
         {
-            ApiResult recData = postWeb(apiUrl + "unbanChatMember", "chat_id=" + ChatID + "&user_id=" + UserID);
+            var recData = postWeb(apiUrl + "unbanChatMember", "chat_id=" + ChatID + "&user_id=" + UserID);
             return getSetActionResult(recData);
         }
 
@@ -254,15 +254,15 @@ namespace ReimuAPI.ReimuBase
             bool SendWebpage = false
         )
         {
-            string realUtilDate = "";
+            var realUtilDate = "";
             if (UtilDate != 0) realUtilDate = "&until_date=" + UtilDate;
-            string permissions = "";
+            var permissions = "";
             permissions += "&can_send_messages=" + booleanToString(SendMessage);
             permissions += "&can_send_media_messages=" + booleanToString(SendMedia);
             permissions += "&can_send_other_messages=" + booleanToString(SendOthers);
             permissions += "&can_add_web_page_previews=" + booleanToString(SendWebpage);
-            ApiResult recData = postWeb(apiUrl + "restrictChatMember", "chat_id=" + ChatID +
-                                                                       "&user_id=" + UserID + realUtilDate + permissions
+            var recData = postWeb(apiUrl + "restrictChatMember", "chat_id=" + ChatID +
+                                                                 "&user_id=" + UserID + realUtilDate + permissions
             );
             return getSetActionResult(recData);
         }
@@ -280,7 +280,7 @@ namespace ReimuAPI.ReimuBase
             bool PromoteMembers = false
         )
         {
-            string permissions = "";
+            var permissions = "";
             permissions += "&can_change_info=" + booleanToString(ChangeInfo);
             permissions += "&can_post_messages=" + booleanToString(PostMessages);
             permissions += "&can_edit_messages=" + booleanToString(EditMessages);
@@ -289,45 +289,45 @@ namespace ReimuAPI.ReimuBase
             permissions += "&can_restrict_members=" + booleanToString(RestrictMembers);
             permissions += "&can_pin_messages=" + booleanToString(PinMessages);
             permissions += "&can_promote_members=" + booleanToString(PromoteMembers);
-            ApiResult recData = postWeb(apiUrl + "promoteChatMember", "chat_id=" + ChatID +
-                                                                      "&user_id=" + UserID + permissions
+            var recData = postWeb(apiUrl + "promoteChatMember", "chat_id=" + ChatID +
+                                                                "&user_id=" + UserID + permissions
             );
             return getSetActionResult(recData);
         }
 
         public SetActionResult exportChatInviteLink(long ChatID)
         {
-            ApiResult recData = postWeb(apiUrl + "exportChatInviteLink", "chat_id=" + ChatID);
+            var recData = postWeb(apiUrl + "exportChatInviteLink", "chat_id=" + ChatID);
             return getSetActionResult(recData);
         }
 
         public SendMessageResult setChatPhoto(long ChatID, byte[] photo)
         {
-            ApiResult recData = postWeb(apiUrl + "setChatPhoto", "chat_id=" + ChatID);
+            var recData = postWeb(apiUrl + "setChatPhoto", "chat_id=" + ChatID);
             return getSendMessageResult(recData);
         }
 
         public SendMessageResult deleteChatPhoto(long ChatID)
         {
-            ApiResult recData = postWeb(apiUrl + "deleteChatPhoto", "chat_id=" + ChatID);
+            var recData = postWeb(apiUrl + "deleteChatPhoto", "chat_id=" + ChatID);
             return getSendMessageResult(recData);
         }
 
         public SendMessageResult setChatTitle(long ChatID, string Title)
         {
-            ApiResult recData = postWeb(apiUrl + "setChatTitle", "chat_id=" + ChatID + "&title=" + Title);
+            var recData = postWeb(apiUrl + "setChatTitle", "chat_id=" + ChatID + "&title=" + Title);
             return getSendMessageResult(recData);
         }
 
         public SetActionResult setChatDescription(long ChatID, string Description)
         {
-            ApiResult recData = postWeb(apiUrl + "setChatDescription", "chat_id=" + ChatID + "&title=" + Description);
+            var recData = postWeb(apiUrl + "setChatDescription", "chat_id=" + ChatID + "&title=" + Description);
             return getSetActionResult(recData);
         }
 
         public SendMessageResult pinChatMessage(long ChatID, int MessageID, bool DisableNotification)
         {
-            ApiResult recData = postWeb(
+            var recData = postWeb(
                 apiUrl + "setChatDescription",
                 "chat_id=" + ChatID +
                 "&message_id=" + MessageID +
@@ -338,37 +338,37 @@ namespace ReimuAPI.ReimuBase
 
         public SetActionResult unpinChatMessage(long ChatID)
         {
-            ApiResult recData = postWeb(apiUrl + "unpinChatMessage", "chat_id=" + ChatID);
+            var recData = postWeb(apiUrl + "unpinChatMessage", "chat_id=" + ChatID);
             return getSetActionResult(recData);
         }
 
         public SetActionResult leaveChat(long ChatID)
         {
-            ApiResult recData = postWeb(apiUrl + "leaveChat", "chat_id=" + ChatID);
+            var recData = postWeb(apiUrl + "leaveChat", "chat_id=" + ChatID);
             return getSetActionResult(recData);
         }
 
         public ChatInfoRequest getChatInfo(long ChatID)
         {
-            ApiResult recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
+            var recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
             return getChatInfo(recData);
         }
 
         public ChatInfoRequest getChatInfo(string ChatID)
         {
-            ApiResult recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
+            var recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
             return getChatInfo(recData);
         }
 
         public UserInfoRequest getChat(long ChatID)
         {
-            ApiResult recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
+            var recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
             return getMemberInfo(recData);
         }
 
         public UserInfoRequest getChat(string ChatID)
         {
-            ApiResult recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
+            var recData = postWeb(apiUrl + "getChat", "chat_id=" + ChatID);
             return getMemberInfo(recData);
         }
 
@@ -392,7 +392,7 @@ namespace ReimuAPI.ReimuBase
                 TempData.adminListUptime = DateTime.Now.AddMinutes(60);
             }
 
-            MemberList data = (MemberList) new DataContractJsonSerializer(
+            var data = (MemberList) new DataContractJsonSerializer(
                 typeof(MemberList)
             ).ReadObject(
                 new MemoryStream(
@@ -405,8 +405,8 @@ namespace ReimuAPI.ReimuBase
 
         public MembersCountResult getChatMembersCount(long ChatID)
         {
-            ApiResult recData = postWeb(apiUrl + "getChatMembersCount", "chat_id=" + ChatID);
-            MembersCountResult data = (MembersCountResult) new DataContractJsonSerializer(
+            var recData = postWeb(apiUrl + "getChatMembersCount", "chat_id=" + ChatID);
+            var data = (MembersCountResult) new DataContractJsonSerializer(
                 typeof(MembersCountResult)
             ).ReadObject(
                 new MemoryStream(
@@ -419,7 +419,7 @@ namespace ReimuAPI.ReimuBase
 
         public UserInfoRequest getChatMember(long ChatID, int UserID)
         {
-            ApiResult recData = postWeb(apiUrl + "getChatMember", "chat_id=" + ChatID + "&user_id=" + UserID);
+            var recData = postWeb(apiUrl + "getChatMember", "chat_id=" + ChatID + "&user_id=" + UserID);
             return getMemberInfo(recData);
         }
 
@@ -430,13 +430,13 @@ namespace ReimuAPI.ReimuBase
             string URL = null,
             int CacheTime = 0)
         {
-            string otherMsg = "";
+            var otherMsg = "";
             if (Text != null) otherMsg += "&text=" + Text;
             otherMsg += "&show_alert=" + ShowAlert;
             if (URL != null) otherMsg += "&url=" + URL;
             if (CacheTime != 0) otherMsg += "&cache_time=" + CacheTime;
 
-            ApiResult recData = postWeb(apiUrl + "answerCallbackQuery",
+            var recData = postWeb(apiUrl + "answerCallbackQuery",
                 "callback_query_id=" + CallbackQueryID + otherMsg);
             return recData;
         }
@@ -452,7 +452,7 @@ namespace ReimuAPI.ReimuBase
             string ReplyMarkup = null
         )
         {
-            string jsonData = "{\"text\":" + jsonEncode(Message);
+            var jsonData = "{\"text\":" + jsonEncode(Message);
             if (ChatID != -1) jsonData += ",\"chat_id\":" + ChatID;
             if (InlineMessageID != null)
             {
@@ -465,7 +465,7 @@ namespace ReimuAPI.ReimuBase
             jsonData += ",\"disable_web_page_preview\":" + booleanToString(DisableWebPreview);
             if (ReplyMarkup != null) jsonData += ",\"reply_markup\":" + ReplyMarkup;
             jsonData += "}";
-            ApiResult recData = postJson(apiUrl + "editMessageText", jsonData);
+            var recData = postJson(apiUrl + "editMessageText", jsonData);
             return recData;
         }
 
@@ -477,7 +477,7 @@ namespace ReimuAPI.ReimuBase
             string ReplyMarkup = null
         )
         {
-            string jsonData = "{";
+            var jsonData = "{";
             if (ChatID != -1) jsonData += "\"chat_id\":" + ChatID;
             if (InlineMessageID != null)
             {
@@ -488,7 +488,7 @@ namespace ReimuAPI.ReimuBase
             if (Message != null) jsonData += "\"caption\":" + jsonEncode(Message);
             if (ReplyMarkup != null) jsonData += ",\"reply_markup\":" + ReplyMarkup;
             jsonData += "}";
-            ApiResult recData = postJson(apiUrl + "editMessageCaption", jsonData);
+            var recData = postJson(apiUrl + "editMessageCaption", jsonData);
             return recData;
         }
 
@@ -499,7 +499,7 @@ namespace ReimuAPI.ReimuBase
             string ReplyMarkup = null
         )
         {
-            string jsonData = "{";
+            var jsonData = "{";
             if (ChatID != -1) jsonData += "\"chat_id\":" + ChatID;
             if (InlineMessageID != null)
             {
@@ -509,13 +509,13 @@ namespace ReimuAPI.ReimuBase
 
             if (ReplyMarkup != null) jsonData += ",\"reply_markup\":" + ReplyMarkup;
             jsonData += "}";
-            ApiResult recData = postJson(apiUrl + "editMessageReplyMarkup", jsonData);
+            var recData = postJson(apiUrl + "editMessageReplyMarkup", jsonData);
             return recData;
         }
 
         public ApiResult deleteMessage(long ChatID, int MessageID)
         {
-            ApiResult recData = postWeb(apiUrl + "deleteMessage", "chat_id=" + ChatID + "&message_id=" + MessageID);
+            var recData = postWeb(apiUrl + "deleteMessage", "chat_id=" + ChatID + "&message_id=" + MessageID);
             return recData;
         }
 
@@ -531,8 +531,8 @@ namespace ReimuAPI.ReimuBase
 
         public bool checkIsAdmin(long gid, int uid)
         {
-            GroupUserInfo[] list = getChatAdministrators(gid);
-            foreach (GroupUserInfo admin in list)
+            var list = getChatAdministrators(gid);
+            foreach (var admin in list)
                 if (admin.user.id == uid)
                     return true;
             return false;
@@ -540,7 +540,7 @@ namespace ReimuAPI.ReimuBase
 
         public SendMessageResult getSendMessageResult(ApiResult content)
         {
-            SendMessageResult data = (SendMessageResult) new DataContractJsonSerializer(
+            var data = (SendMessageResult) new DataContractJsonSerializer(
                 typeof(SendMessageResult)
             ).ReadObject(
                 new MemoryStream(
@@ -553,7 +553,7 @@ namespace ReimuAPI.ReimuBase
 
         public SetActionResult getSetActionResult(ApiResult content)
         {
-            SetActionResult data = (SetActionResult) new DataContractJsonSerializer(
+            var data = (SetActionResult) new DataContractJsonSerializer(
                 typeof(SetActionResult)
             ).ReadObject(
                 new MemoryStream(
@@ -566,7 +566,7 @@ namespace ReimuAPI.ReimuBase
 
         public UserInfoRequest getMemberInfo(ApiResult content)
         {
-            UserInfoRequest data = (UserInfoRequest) new DataContractJsonSerializer(
+            var data = (UserInfoRequest) new DataContractJsonSerializer(
                 typeof(UserInfoRequest)
             ).ReadObject(
                 new MemoryStream(
@@ -579,7 +579,7 @@ namespace ReimuAPI.ReimuBase
 
         public ChatInfoRequest getChatInfo(ApiResult content)
         {
-            ChatInfoRequest data = (ChatInfoRequest) new DataContractJsonSerializer(
+            var data = (ChatInfoRequest) new DataContractJsonSerializer(
                 typeof(ChatInfoRequest)
             ).ReadObject(
                 new MemoryStream(
@@ -599,10 +599,10 @@ namespace ReimuAPI.ReimuBase
 
         public string jsonEncode(object obj)
         {
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(obj.GetType());
-            MemoryStream stream = new MemoryStream();
+            var serializer = new DataContractJsonSerializer(obj.GetType());
+            var stream = new MemoryStream();
             serializer.WriteObject(stream, obj);
-            byte[] dataBytes = new byte[stream.Length];
+            var dataBytes = new byte[stream.Length];
             stream.Position = 0;
             stream.Read(dataBytes, 0, (int) stream.Length);
             return Encoding.UTF8.GetString(dataBytes);
@@ -610,14 +610,14 @@ namespace ReimuAPI.ReimuBase
 
         public ApiResult postWeb(string uri, string param)
         {
-            byte[] bs = Encoding.UTF8.GetBytes(param);
+            var bs = Encoding.UTF8.GetBytes(param);
 
-            HttpWebRequest req = (HttpWebRequest) WebRequest.Create(uri);
+            var req = (HttpWebRequest) WebRequest.Create(uri);
             req.Method = "POST";
             req.ContentType = "application/x-www-form-urlencoded; charset=utf-8";
             req.ContentLength = bs.Length;
 
-            using (Stream reqStream = req.GetRequestStream())
+            using (var reqStream = req.GetRequestStream())
             {
                 reqStream.Write(bs, 0, bs.Length);
             }
@@ -626,8 +626,8 @@ namespace ReimuAPI.ReimuBase
             HttpStatusCode statusCode;
             try
             {
-                WebResponse wr = req.GetResponse();
-                MemoryStream memoryStream = new MemoryStream();
+                var wr = req.GetResponse();
+                var memoryStream = new MemoryStream();
                 wr.GetResponseStream().CopyTo(memoryStream);
                 returnText = Encoding.UTF8.GetString(memoryStream.ToArray());
                 statusCode = HttpStatusCode.OK;
@@ -636,10 +636,10 @@ namespace ReimuAPI.ReimuBase
             {
                 if (e.Status == WebExceptionStatus.ProtocolError)
                 {
-                    HttpWebResponse resp = e.Response as HttpWebResponse;
+                    var resp = e.Response as HttpWebResponse;
                     if (resp != null)
                     {
-                        MemoryStream memoryStream = new MemoryStream();
+                        var memoryStream = new MemoryStream();
                         resp.GetResponseStream().CopyTo(memoryStream);
                         returnText = Encoding.UTF8.GetString(memoryStream.ToArray());
                         statusCode = resp.StatusCode;
@@ -670,11 +670,11 @@ namespace ReimuAPI.ReimuBase
 
         public ApiResult postJson(string uri, string json)
         {
-            HttpWebRequest req = (HttpWebRequest) WebRequest.Create(uri);
+            var req = (HttpWebRequest) WebRequest.Create(uri);
             req.Method = "POST";
             req.ContentType = "application/json; charset=utf-8";
 
-            using (StreamWriter streamWriter = new StreamWriter(req.GetRequestStream()))
+            using (var streamWriter = new StreamWriter(req.GetRequestStream()))
             {
                 streamWriter.Write(json);
                 streamWriter.Flush();
@@ -685,8 +685,8 @@ namespace ReimuAPI.ReimuBase
             HttpStatusCode statusCode;
             try
             {
-                HttpWebResponse resp = (HttpWebResponse) req.GetResponse();
-                MemoryStream memoryStream = new MemoryStream();
+                var resp = (HttpWebResponse) req.GetResponse();
+                var memoryStream = new MemoryStream();
                 resp.GetResponseStream().CopyTo(memoryStream);
                 returnText = Encoding.UTF8.GetString(memoryStream.ToArray());
                 statusCode = resp.StatusCode;
@@ -695,10 +695,10 @@ namespace ReimuAPI.ReimuBase
             {
                 if (e.Status == WebExceptionStatus.ProtocolError)
                 {
-                    HttpWebResponse resp = e.Response as HttpWebResponse;
+                    var resp = e.Response as HttpWebResponse;
                     if (resp != null)
                     {
-                        MemoryStream memoryStream = new MemoryStream();
+                        var memoryStream = new MemoryStream();
                         resp.GetResponseStream().CopyTo(memoryStream);
                         returnText = Encoding.UTF8.GetString(memoryStream.ToArray());
                         statusCode = resp.StatusCode;
@@ -719,15 +719,15 @@ namespace ReimuAPI.ReimuBase
 
         public ApiResult getWeb(string uri)
         {
-            HttpWebRequest req = (HttpWebRequest) WebRequest.Create(uri);
+            var req = (HttpWebRequest) WebRequest.Create(uri);
             req.Method = "GET";
 
             string returnText;
             HttpStatusCode statusCode;
             try
             {
-                WebResponse wr = req.GetResponse();
-                MemoryStream memoryStream = new MemoryStream();
+                var wr = req.GetResponse();
+                var memoryStream = new MemoryStream();
                 wr.GetResponseStream().CopyTo(memoryStream);
                 returnText = Encoding.UTF8.GetString(memoryStream.ToArray());
                 statusCode = HttpStatusCode.OK;
@@ -736,10 +736,10 @@ namespace ReimuAPI.ReimuBase
             {
                 if (e.Status == WebExceptionStatus.ProtocolError)
                 {
-                    HttpWebResponse resp = e.Response as HttpWebResponse;
+                    var resp = e.Response as HttpWebResponse;
                     if (resp != null)
                     {
-                        MemoryStream memoryStream = new MemoryStream();
+                        var memoryStream = new MemoryStream();
                         resp.GetResponseStream().CopyTo(memoryStream);
                         returnText = Encoding.UTF8.GetString(memoryStream.ToArray());
                         statusCode = resp.StatusCode;
