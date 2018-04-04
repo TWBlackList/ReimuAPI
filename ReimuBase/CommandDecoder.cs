@@ -12,18 +12,18 @@ namespace ReimuAPI.ReimuBase
     {
         public static Dictionary<string, string> cutKeyIsValue(string message)
         {
-            var values = new Dictionary<string, string>();
-            var CommandSpace = message.IndexOf(" ");
-            var key = "";
-            var value = "";
-            var finalKey = 0;
-            var process = 0;
-            var started = false;
-            var haveSpace = false;
-            var finishKey = false;
-            var allFinish = false;
-            var strLength = message.Length;
-            for (var i = 0; i < strLength; i++)
+            Dictionary<string, string> values = new Dictionary<string, string>();
+            int CommandSpace = message.IndexOf(" ");
+            string key = "";
+            string value = "";
+            int finalKey = 0;
+            int process = 0;
+            bool started = false;
+            bool haveSpace = false;
+            bool finishKey = false;
+            bool allFinish = false;
+            int strLength = message.Length;
+            for (int i = 0; i < strLength; i++)
             {
                 if (i < finalKey) continue;
                 if (finishKey)
@@ -48,7 +48,7 @@ namespace ReimuAPI.ReimuBase
                     allFinish = false;
                 }
 
-                var ch = message[i] + "";
+                string ch = message[i] + "";
                 if (process == 0)
                 {
                     if (haveSpace == false && ch == "=")
@@ -115,7 +115,7 @@ namespace ReimuAPI.ReimuBase
 
                         if (i + 2 <= strLength && haveSpace)
                         {
-                            var space = message[i + 1] + "";
+                            string space = message[i + 1] + "";
                             if (space == " ")
                             {
                                 if (message[i - 1] + "" == "\\")

@@ -12,7 +12,7 @@ namespace ReimuAPI.ReimuBase.Caller
         internal static void callPlugins(List<PluginObject> plugins, string method, string JsonMessage,
             object[] objects = null)
         {
-            foreach (var pl in plugins)
+            foreach (PluginObject pl in plugins)
                 if (pl.IsImportant)
                     try
                     {
@@ -51,8 +51,8 @@ namespace ReimuAPI.ReimuBase.Caller
         internal static void callTextReceiver(List<PluginObject> plugins, string method, string JsonMessage,
             object[] objects = null)
         {
-            var validType = typeof(ITextMessageListener);
-            foreach (var pl in plugins)
+            Type validType = typeof(ITextMessageListener);
+            foreach (PluginObject pl in plugins)
                 if (pl.IsImportant)
                     try
                     {
@@ -94,8 +94,8 @@ namespace ReimuAPI.ReimuBase.Caller
         internal static void callCommandReceiver(List<PluginObject> plugins, string method, string JsonMessage,
             object[] objects = null)
         {
-            var validType = typeof(ICommandReceiver);
-            foreach (var pl in plugins)
+            Type validType = typeof(ICommandReceiver);
+            foreach (PluginObject pl in plugins)
                 if (pl.IsImportant)
                     try
                     {
@@ -137,8 +137,8 @@ namespace ReimuAPI.ReimuBase.Caller
         internal static void callStartReceiver(List<PluginObject> plugins, string method, string JsonMessage,
             object[] objects = null)
         {
-            var validType = typeof(ICommandReceiver);
-            foreach (var pl in plugins)
+            Type validType = typeof(ICommandReceiver);
+            foreach (PluginObject pl in plugins)
                 if (pl.IsImportant)
                     try
                     {
@@ -180,8 +180,8 @@ namespace ReimuAPI.ReimuBase.Caller
         internal static void callMemberJoinReceiver(List<PluginObject> plugins, string method, string JsonMessage,
             object[] objects = null)
         {
-            var validType = typeof(IMemberJoinLeftListener);
-            foreach (var pl in plugins)
+            Type validType = typeof(IMemberJoinLeftListener);
+            foreach (PluginObject pl in plugins)
                 if (pl.IsImportant)
                     try
                     {
@@ -223,8 +223,8 @@ namespace ReimuAPI.ReimuBase.Caller
         internal static void callOtherMessageReceiver(List<PluginObject> plugins, string method, string JsonMessage,
             object[] objects = null)
         {
-            var validType = typeof(IMemberJoinLeftListener);
-            foreach (var pl in plugins)
+            Type validType = typeof(IMemberJoinLeftListener);
+            foreach (PluginObject pl in plugins)
                 if (pl.IsImportant)
                     try
                     {
@@ -269,8 +269,8 @@ namespace ReimuAPI.ReimuBase.Caller
 
         internal static string getHelpMessage(List<PluginObject> plugins, TgMessage RawMessage, string MessageType)
         {
-            var msg = "";
-            foreach (var pl in plugins)
+            string msg = "";
+            foreach (PluginObject pl in plugins)
             {
                 string pluginhelpmsg = null;
                 try

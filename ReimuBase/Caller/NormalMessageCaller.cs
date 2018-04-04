@@ -1,4 +1,5 @@
-﻿using ReimuAPI.ReimuBase.TgData;
+﻿using System.Collections.Generic;
+using ReimuAPI.ReimuBase.TgData;
 
 namespace ReimuAPI.ReimuBase.Caller
 {
@@ -10,8 +11,8 @@ namespace ReimuAPI.ReimuBase.Caller
         public void call(TgMessage message, string JsonMessage)
         {
             if (TempData.pluginsList == null) RAPI.loadPlugins();
-            var plugins = TempData.pluginsList;
-            var messageType = message.chat.type.Substring(0, 1).ToUpper() + message.chat.type.Substring(1).ToLower();
+            List<PluginObject> plugins = TempData.pluginsList;
+            string messageType = message.chat.type.Substring(0, 1).ToUpper() + message.chat.type.Substring(1).ToLower();
             if (message.text != null)
             {
                 if (message.entities != null) // 收到蓝字
@@ -39,7 +40,7 @@ namespace ReimuAPI.ReimuBase.Caller
 
                         if (message.entities[0].offset == 0)
                         {
-                            var command = message.text.Substring(0, message.entities[0].length).ToLower();
+                            string command = message.text.Substring(0, message.entities[0].length).ToLower();
                             if (command.IndexOf("@") != -1)
                             {
                                 if (command.IndexOf("@" + TgApi.getDefaultApiConnection().getMe().username.ToLower()) !=

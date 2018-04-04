@@ -20,7 +20,7 @@ namespace ReimuAPI.ReimuBase.Caller
         private void callMemberJoinReceiver(List<PluginObject> plugins)
         {
             TempData.tempAdminList = null;
-            foreach (var pl in plugins)
+            foreach (PluginObject pl in plugins)
                 try
                 {
                     pl.callClear();

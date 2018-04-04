@@ -11,7 +11,7 @@ namespace ReimuAPI.ReimuBase.Caller
         public PluginObject(string DllPath, bool IsImportant, string PluginName)
         {
             assembly = Assembly.LoadFrom(DllPath);
-            var AllowInterfaces =
+            Type[] AllowInterfaces =
             {
                 typeof(ITextMessageListener),
                 typeof(IOtherMessageReceiver),
@@ -20,15 +20,15 @@ namespace ReimuAPI.ReimuBase.Caller
                 typeof(ICommandReceiver),
                 typeof(IStartReceiver)
             };
-            var helpMsgType = typeof(IHelpMessage);
-            var clearTimeouteType = typeof(IClearItemsReceiver);
-            var types = assembly.GetTypes();
-            foreach (var t in types)
+            Type helpMsgType = typeof(IHelpMessage);
+            Type clearTimeouteType = typeof(IClearItemsReceiver);
+            Type[] types = assembly.GetTypes();
+            foreach (Type t in types)
             {
-                foreach (var at in AllowInterfaces)
+                foreach (Type at in AllowInterfaces)
                     if (at.IsAssignableFrom(t))
                     {
-                        var obj = Activator.CreateInstance(t);
+                        object obj = Activator.CreateInstance(t);
                         if (messageListener == null)
                             messageListener = new List<CallablePlugin> {new CallablePlugin(t, obj)};
                         else
@@ -38,7 +38,7 @@ namespace ReimuAPI.ReimuBase.Caller
 
                 if (helpMsgType.IsAssignableFrom(t))
                 {
-                    var obj = Activator.CreateInstance(t);
+                    object obj = Activator.CreateInstance(t);
                     if (helpObjects == null)
                         helpObjects = new List<CallablePlugin> {new CallablePlugin(t, obj)};
                     else
@@ -47,7 +47,7 @@ namespace ReimuAPI.ReimuBase.Caller
 
                 if (clearTimeouteType.IsAssignableFrom(t))
                 {
-                    var obj = Activator.CreateInstance(t);
+                    object obj = Activator.CreateInstance(t);
                     if (clearTimeoutListener == null)
                         clearTimeoutListener = new List<CallablePlugin> {new CallablePlugin(t, obj)};
                     else
@@ -69,11 +69,11 @@ namespace ReimuAPI.ReimuBase.Caller
         internal void callMessage(string MethodName, object[] parameters)
         {
             if (messageListener == null) return;
-            foreach (var plugin in messageListener)
+            foreach (CallablePlugin plugin in messageListener)
                 if (typeof(IMessageListener).IsAssignableFrom(plugin.type))
                     try
                     {
-                        var resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
+                        CallbackMessage resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
                         GetException(resultobj);
                     }
                     catch (NotImplementedException)
@@ -84,10 +84,10 @@ namespace ReimuAPI.ReimuBase.Caller
         internal void callMessage(string MethodName, object[] parameters, Type type)
         {
             if (messageListener == null) return;
-            var allmsgreciver = typeof(IOtherMessageReceiver);
-            var messagelistener = typeof(IMessageListener);
-            var processAllInterfacesParamters = {parameters[0], parameters[1]};
-            foreach (var plugin in messageListener)
+            Type allmsgreciver = typeof(IOtherMessageReceiver);
+            Type messagelistener = typeof(IMessageListener);
+            object[] processAllInterfacesParamters = {parameters[0], parameters[1]};
+            foreach (CallablePlugin plugin in messageListener)
             {
                 if (allmsgreciver.IsAssignableFrom(plugin.type))
                 {
@@ -95,7 +95,7 @@ namespace ReimuAPI.ReimuBase.Caller
                     if (allmsgreciver.IsAssignableFrom(type))
                         try
                         {
-                            var resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
+                            CallbackMessage resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
                             GetException(resultobj);
                         }
                         catch (NotImplementedException)
@@ -104,7 +104,7 @@ namespace ReimuAPI.ReimuBase.Caller
                     else
                         try
                         {
-                            var resultobj = (CallbackMessage) plugin.callPlugin("ReceiveAllNormalMessage",
+                            CallbackMessage resultobj = (CallbackMessage) plugin.callPlugin("ReceiveAllNormalMessage",
                                 processAllInterfacesParamters);
                             GetException(resultobj);
                         }
@@ -122,7 +122,7 @@ namespace ReimuAPI.ReimuBase.Caller
                     // 如果这个类是处理普通消息的接口则运行这个插件
                     try
                     {
-                        var resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
+                        CallbackMessage resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
                         GetException(resultobj);
                     }
                     catch (NotImplementedException)
@@ -135,7 +135,7 @@ namespace ReimuAPI.ReimuBase.Caller
                 if (type.IsAssignableFrom(plugin.type))
                     try
                     {
-                        var resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
+                        CallbackMessage resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
                         GetException(resultobj);
                     }
                     catch (NotImplementedException)
@@ -147,7 +147,7 @@ namespace ReimuAPI.ReimuBase.Caller
         internal void callClear()
         {
             if (clearTimeoutListener == null) return;
-            foreach (var plugin in clearTimeoutListener)
+            foreach (CallablePlugin plugin in clearTimeoutListener)
                 try
                 {
                     plugin.callPlugin("ClearItems", new object[] { });
@@ -160,11 +160,11 @@ namespace ReimuAPI.ReimuBase.Caller
         internal string getHelpContent(TgMessage RawMessage, string MessageType)
         {
             if (helpObjects == null) return "";
-            var helpmsg = "";
-            foreach (var plugin in helpObjects)
+            string helpmsg = "";
+            foreach (CallablePlugin plugin in helpObjects)
                 try
                 {
-                    var helpobj = plugin.callPlugin("GetHelpMessage", new object[] {RawMessage, MessageType});
+                    object helpobj = plugin.callPlugin("GetHelpMessage", new object[] {RawMessage, MessageType});
                     if (helpobj != null) helpmsg += (string) helpobj;
                 }
                 catch (NotImplementedException)
@@ -193,9 +193,9 @@ namespace ReimuAPI.ReimuBase.Caller
 
         internal object callPlugin(string MethodName, object[] parameters)
         {
-            var methodInfoList = type.GetMethods();
+            MethodInfo[] methodInfoList = type.GetMethods();
             MethodInfo methodInfo = null;
-            foreach (var method in methodInfoList)
+            foreach (MethodInfo method in methodInfoList)
                 if (method.Name == MethodName)
                     methodInfo = method;
             if (methodInfo == null)
