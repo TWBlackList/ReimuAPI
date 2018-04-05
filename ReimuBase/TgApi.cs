@@ -372,7 +372,7 @@ namespace ReimuAPI.ReimuBase
             return getMemberInfo(recData);
         }
 
-        public GroupUserInfo[] getChatAdministrators(long gid)
+        public GroupUserInfo[] getChatAdministrators(long gid,bool reset = false)
         {
             if (TempData.tempAdminList == null)
             {
@@ -380,6 +380,9 @@ namespace ReimuAPI.ReimuBase
                 TempData.adminListUptime = DateTime.Now.AddMinutes(60);
             }
 
+            if(reset)
+                TempData.tempAdminList.Clear();
+                
             GroupUserInfo[] list;
             if (DateTime.Now <= TempData.adminListUptime)
             {
