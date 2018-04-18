@@ -99,9 +99,9 @@ namespace ReimuAPI.ReimuBase
 
         public static bool getIsInWhitelist(int UserID)
         {
-            if getIsInHKWhitelist(UserID) return true;
-            if getIsBotAdmin(UserID) return true;
-            if getIsBotOP(UserID) return true;
+            if (getIsInHKWhitelist(UserID)) return true;
+            if (getIsBotAdmin(UserID)) return true;
+            if (getIsBotOP(UserID)) return true;
             ReimuConfig config = new ConfigManager().getConfig();
             foreach (int i in config.whitelist)
                 if (i == UserID)
