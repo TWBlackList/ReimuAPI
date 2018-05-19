@@ -35,6 +35,8 @@ namespace ReimuAPI.ReimuBase
                 }
                 catch (Exception e)
                 {
+                    Log.i("Plugin \"" + i + "\" (important) load unsuccess");
+                    Log.i("Please put plugin in " + pluginsBaseDir);
                     GetExceptionListener().OnException(e);
                 }
             }
@@ -50,6 +52,8 @@ namespace ReimuAPI.ReimuBase
                 }
                 catch (Exception e)
                 {
+                    Log.i("Plugin \"" + i + "\" (normal) load unsuccess");
+                    Log.i("Please put plugin in " + pluginsBaseDir);
                     GetExceptionListener().OnException(e);
                 }
             }
