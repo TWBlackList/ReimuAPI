@@ -82,46 +82,7 @@ namespace ReimuAPI.ReimuBase
             text = text.Replace("`", @"\`");
             return text;
         }
-
-        public static bool getIsBlockGroup(long GroupID)
-        {
-            ReimuConfig config = new ConfigManager().getConfig();
-            foreach (long i in config.blockgroup_list)
-                if (i == GroupID)
-                    return true;
-            return false;
-        }
-
-        public static bool getIsInWhitelist(long ChannelID)
-        {
-            ReimuConfig config = new ConfigManager().getConfig();
-            foreach (long i in config.whitelist)
-                if (i == ChannelID)
-                    return true;
-            return false;
-        }
-
-        public static bool getIsInWhitelist(int UserID)
-        {
-            if (getIsInHKWhitelist(UserID)) return true;
-            if (getIsBotAdmin(UserID)) return true;
-            if (getIsBotOP(UserID)) return true;
-            ReimuConfig config = new ConfigManager().getConfig();
-            foreach (int i in config.whitelist)
-                if (i == UserID)
-                    return true;
-            return false;
-        }
-
-        public static bool getIsInHKWhitelist(int UserID)
-        {
-            ReimuConfig config = new ConfigManager().getConfig();
-            foreach (int i in config.hk_whitelist)
-                if (i == UserID)
-                    return true;
-            return false;
-        }
-
+        
         public static bool getIsBotAdmin(int UserID)
         {
             ReimuConfig config = new ConfigManager().getConfig();
