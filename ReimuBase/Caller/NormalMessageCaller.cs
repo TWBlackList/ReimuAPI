@@ -127,6 +127,10 @@ namespace ReimuAPI.ReimuBase.Caller
 
             if (message.photo != null)
             {
+                PluginsCaller.callTextReceiver(plugins, "On" + messageType + "MessageReceive", JsonMessage,
+                    new object[] {message, JsonMessage, message.text});
+                return; //
+                
                 PluginsCaller.callPlugins(plugins, "On" + messageType + "PhotoReceive", JsonMessage,
                     new object[] {message, JsonMessage, message.photo});
                 return; // 收到照片
