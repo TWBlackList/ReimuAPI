@@ -45,5 +45,16 @@
 
             return info;
         }
+        
+        public string GetUserTextInfo_MD()
+        {
+            string info = "\nID : `" + id + "`";
+            if (first_name != null) info += "\nFirst name : `" + RAPI.escapeMarkdown(first_name) + "`";
+            if (last_name != null) info += "\nLast name : `" + RAPI.escapeMarkdown(last_name) + "`";
+            if (username != null) info += "\nUsername : @`" +  RAPI.escapeMarkdown(username) + "`";
+            if (language_code != null) info += "\nLanguage code : `" +  RAPI.escapeMarkdown(language_code) + "`";
+
+            return info;
+        }
     }
 }

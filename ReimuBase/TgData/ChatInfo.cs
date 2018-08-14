@@ -37,5 +37,18 @@ namespace ReimuAPI.ReimuBase.TgData
             if (all_members_are_administrators) ChatInfo += "\nAll members are admin: true";
             return ChatInfo;
         }
+        
+        public string GetChatTextInfo_MD()
+        {
+            string ChatInfo = "ID: `" + id + "`";
+            ChatInfo += "\nType: `" + type + "`";
+            if (first_name != null) ChatInfo += "\nFirst name: `" + RAPI.escapeMarkdown(first_name) + "`";
+            if (title != null) ChatInfo += "\nLast name: `" + RAPI.escapeMarkdown(title) + "`";
+            if (title != null) ChatInfo += "\nTitle: `" + RAPI.escapeMarkdown(title) + "`";
+            if (username != null) ChatInfo += "\nUsername : @" + RAPI.escapeMarkdown(username);
+            if (all_members_are_administrators) ChatInfo += "\nAll members are admin: `true`";
+            return ChatInfo;
+        }
+        
     }
 }
