@@ -70,21 +70,28 @@ namespace ReimuAPI.ReimuBase.Caller
         {
             if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : PluginObject callMesasge(non type)");
             if (messageListener == null) return;
-            if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : PluginObject callMesasge(non type) -> " + MethodName);
             foreach (CallablePlugin plugin in messageListener)
                 if (typeof(IMessageListener).IsAssignableFrom(plugin.type))
                     try
                     {
-                        if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : PluginObject(forEach0g) -> " + MethodName);
+                        if (RAPI.getIsDebugEnv())
+                            Console.WriteLine("Message Caller : PluginObject(forEach0g) -> " + MethodName);
                         CallbackMessage resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
                         GetException(resultobj);
                     }
                     catch (NotImplementedException)
                     {
+                    }
+                else
+                    try
+                    {
                         object[] processAllInterfacesParamters = {parameters[0], parameters[1]};
                         CallbackMessage resultogbj = (CallbackMessage) plugin.callPlugin("ReceiveAllNormalMessage",
                             processAllInterfacesParamters);
                         GetException(resultogbj);
+                    }
+                    catch (NotImplementedException)
+                    {
                     }
         }
 
@@ -103,7 +110,8 @@ namespace ReimuAPI.ReimuBase.Caller
                     if (allmsgreciver.IsAssignableFrom(type))
                         try
                         {
-                            if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : PluginObject(forEach1) -> " + MethodName);
+                            if (RAPI.getIsDebugEnv())
+                                Console.WriteLine("Message Caller : PluginObject(forEach1) -> " + MethodName);
                             CallbackMessage resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
                             GetException(resultobj);
                         }
@@ -132,7 +140,8 @@ namespace ReimuAPI.ReimuBase.Caller
                     // 如果这个类是处理普通消息的接口则运行这个插件
                     try
                     {
-                        if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : PluginObject(forEach2) -> " + MethodName);
+                        if (RAPI.getIsDebugEnv())
+                            Console.WriteLine("Message Caller : PluginObject(forEach2) -> " + MethodName);
                         CallbackMessage resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
                         GetException(resultobj);
                     }
@@ -146,7 +155,8 @@ namespace ReimuAPI.ReimuBase.Caller
                 if (type.IsAssignableFrom(plugin.type))
                     try
                     {
-                        if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : PluginObject(forEach3) -> " + MethodName);
+                        if (RAPI.getIsDebugEnv())
+                            Console.WriteLine("Message Caller : PluginObject(forEach3) -> " + MethodName);
                         CallbackMessage resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
                         GetException(resultobj);
                     }
