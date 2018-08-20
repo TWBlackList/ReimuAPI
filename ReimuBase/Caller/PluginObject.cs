@@ -95,6 +95,7 @@ namespace ReimuAPI.ReimuBase.Caller
                     if (allmsgreciver.IsAssignableFrom(type))
                         try
                         {
+                            if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : PluginObject -> " + MethodName);
                             CallbackMessage resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
                             GetException(resultobj);
                         }
