@@ -84,6 +84,7 @@ namespace ReimuAPI.ReimuBase.Caller
 
         internal void callMessage(string MethodName, object[] parameters, Type type)
         {
+            if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : PluginObject callMesasge -> " + MethodName);
             if (messageListener == null) return;
             Type allmsgreciver = typeof(IOtherMessageReceiver);
             Type messagelistener = typeof(IMessageListener);

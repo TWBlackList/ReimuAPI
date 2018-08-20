@@ -6,6 +6,8 @@ namespace ReimuAPI.ReimuBase.Interfaces
 {
     public interface IMessageListener
     {
+        CallbackMessage ReceiveAllMessage(TgMessage RawMessage, string JsonMessage, string TextMessage);
+        
         CallbackMessage OnStartReceive(TgMessage RawMessage, string JsonMessage, string TextMessage);
 
         CallbackMessage OnPrivateCommandReceive(TgMessage RawMessage, string JsonMessage, string Command);
