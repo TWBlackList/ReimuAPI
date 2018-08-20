@@ -21,7 +21,7 @@ namespace ReimuAPI.ReimuBase.Caller
                     catch (NotImplementedException)
                     {
                     }
-                    catch (StopProcessException)
+                    catch (StopProcessException)    
                     {
                         return;
                     }

@@ -104,6 +104,7 @@ namespace ReimuAPI.ReimuBase.Caller
                     else
                         try
                         {
+                            if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : ReceiveAllNormalMessage");
                             CallbackMessage resultobj = (CallbackMessage) plugin.callPlugin("ReceiveAllNormalMessage",
                                 processAllInterfacesParamters);
                             GetException(resultobj);
@@ -164,6 +165,7 @@ namespace ReimuAPI.ReimuBase.Caller
             foreach (CallablePlugin plugin in helpObjects)
                 try
                 {
+                    if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : GetHelpMessage");
                     object helpobj = plugin.callPlugin("GetHelpMessage", new object[] {RawMessage, MessageType});
                     if (helpobj != null) helpmsg += (string) helpobj;
                 }
