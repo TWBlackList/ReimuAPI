@@ -88,7 +88,6 @@ namespace ReimuAPI.ReimuBase.Caller
                         object[] processAllInterfacesParamters = {parameters[0], parameters[1]};
                         CallbackMessage resultogbj = (CallbackMessage) plugin.callPlugin("ReceiveAllNormalMessage",
                             processAllInterfacesParamters);
-                        GetException(resultogbj);
                     }
                     catch (NotImplementedException)
                     {
