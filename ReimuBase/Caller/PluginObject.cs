@@ -68,9 +68,11 @@ namespace ReimuAPI.ReimuBase.Caller
 
         internal void callMessage(string MethodName, object[] parameters)
         {
+            object[] processAllInterfacesParamters = {parameters[0], parameters[1]};
             if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : PluginObject callMesasge(non type)");
             if (messageListener == null) return;
             foreach (CallablePlugin plugin in messageListener)
+            {
                 if (typeof(IMessageListener).IsAssignableFrom(plugin.type))
                     try
                     {
@@ -82,16 +84,21 @@ namespace ReimuAPI.ReimuBase.Caller
                     catch (NotImplementedException)
                     {
                     }
-                else
+
+                if (typeof(IOtherMessageReceiver).IsAssignableFrom(plugin.type))
+                {
                     try
                     {
-                        object[] processAllInterfacesParamters = {parameters[0], parameters[1]};
-                        CallbackMessage resultogbj = (CallbackMessage) plugin.callPlugin("ReceiveAllNormalMessage",
+                        if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : ReceiveAllNormalMessage");
+                        CallbackMessage resultobj = (CallbackMessage) plugin.callPlugin("ReceiveAllNormalMessage",
                             processAllInterfacesParamters);
+                        GetException(resultobj);
                     }
                     catch (NotImplementedException)
                     {
                     }
+                }
+            }
         }
 
         internal void callMessage(string MethodName, object[] parameters, Type type)
