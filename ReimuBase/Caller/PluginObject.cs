@@ -73,6 +73,7 @@ namespace ReimuAPI.ReimuBase.Caller
                 if (typeof(IMessageListener).IsAssignableFrom(plugin.type))
                     try
                     {
+                        if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : PluginObject(forEach0g) -> " + MethodName);
                         CallbackMessage resultobj = (CallbackMessage) plugin.callPlugin(MethodName, parameters);
                         GetException(resultobj);
                     }
