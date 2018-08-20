@@ -68,8 +68,9 @@ namespace ReimuAPI.ReimuBase.Caller
 
         internal void callMessage(string MethodName, object[] parameters)
         {
-            if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : PluginObject callMesasge(non type) -> " + MethodName);
+            if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : PluginObject callMesasge(non type)"G);
             if (messageListener == null) return;
+            if (RAPI.getIsDebugEnv()) Console.WriteLine("Message Caller : PluginObject callMesasge(non type) -> " + MethodName);
             foreach (CallablePlugin plugin in messageListener)
                 if (typeof(IMessageListener).IsAssignableFrom(plugin.type))
                     try
