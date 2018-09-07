@@ -82,6 +82,12 @@ namespace ReimuAPI.ReimuBase
             text = text.Replace("`", @"\`");
             return text;
         }
+
+        public static bool getIsDebugEnv()
+        {
+            ReimuConfig config = new ConfigManager().getConfig();
+            return config.debug;
+        }
         
         public static bool getIsBotAdmin(int UserID)
         {
