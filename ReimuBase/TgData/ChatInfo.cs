@@ -38,7 +38,7 @@ namespace ReimuAPI.ReimuBase.TgData
             return ChatInfo;
         }
         
-        public string GetChatTextInfo_MD()
+        public string GetChatTextInfoMarkdown()
         {
             string ChatInfo = "ID: `" + id + "`";
             ChatInfo += "\nType: `" + type + "`";
